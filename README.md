@@ -15,11 +15,12 @@ Installation (dépôt public, versions étiquetées `vX.Y.Z`) :
 
 ```json
 "repositories": [{ "type": "vcs", "url": "https://github.com/habibou84/socle" }],
-"require": { "habibou84/socle": "^1.0" }
+"require": { "habibou84/socle": "^1.0@dev" }
 ```
 
-Toute modification passe par ce dépôt : nouvelle étiquette, puis `composer update habibou84/socle` dans chaque
-application. La signature des webhooks fait partie du contrat entre les deux applications : ne la changez qu'avec
+La branche `main` porte la version 1.0.x (alias Composer `1.0.x-dev`) ; le `composer.lock` de chaque application
+fixe le commit exact. Toute modification passe par ce dépôt, puis `composer update habibou84/socle` dans chaque
+application. Quand des étiquettes `vX.Y.Z` seront publiées, les applications pourront exiger `^1.0`. La signature des webhooks fait partie du contrat entre les deux applications : ne la changez qu'avec
 une nouvelle version majeure.
 
 Configuration (`config/services.php` de l'application) :

@@ -23,6 +23,9 @@
             "providers": [
                 "Jibiat\\Socle\\SocleServiceProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-main": "1.0.x-dev"
         }
     },
     "require-dev": {
