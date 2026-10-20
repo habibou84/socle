@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.1';
+    public const VERSION = '1.2';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "directory.json",
+  "title": "Annuaire des entreprises de livraison (GET https://jibiat.com/api/public/directory)",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slug",
+          "name",
+          "url",
+          "connect_url",
+          "cities",
+          "accepts",
+          "stats"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "connect_url": {
+            "type": "string"
+          },
+          "logo_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "pitch": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "zones_count": {
+            "type": "integer"
+          },
+          "ships_inland": {
+            "type": "boolean"
+          },
+          "price_from": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "accepts": {
+            "type": "string",
+            "enum": [
+              "signup",
+              "request"
+            ]
+          },
+          "member_since": {
+            "type": "string",
+            "format": "date"
+          },
+          "stats": {
+            "type": "object",
+            "required": [
+              "deliveries_90d",
+              "success_rate",
+              "average_delivery_hours"
+            ],
+            "properties": {
+              "deliveries_90d": {
+                "type": "integer"
+              },
+              "success_rate": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "average_delivery_hours": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

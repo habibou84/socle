@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "connect-token.json",
+  "title": "Clé obtenue par la connexion en un clic (POST /api/public/connect/token)",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "api_key",
+        "scopes",
+        "merchant",
+        "company"
+      ],
+      "properties": {
+        "api_key": {
+          "type": "string"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "merchant": {
+          "type": "object",
+          "required": [
+            "id",
+            "business_name"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "business_name": {
+              "type": "string"
+            }
+          }
+        },
+        "company": {
+          "type": "object",
+          "required": [
+            "name",
+            "slug",
+            "url"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "slug": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

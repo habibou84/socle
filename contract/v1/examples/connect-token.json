@@ -1,0 +1,22 @@
+{
+  "$schema": "connect-token",
+  "data": {
+    "api_key": "lv_abcd1234_AbCdEfGhIjKlMnOpQrStUvWxYz0123456789ABCD",
+    "scopes": [
+      "orders:read",
+      "orders:write",
+      "webhooks:write",
+      "payouts:read",
+      "stock:read"
+    ],
+    "merchant": {
+      "id": 12,
+      "business_name": "Awa Mode"
+    },
+    "company": {
+      "name": "Rapide Express",
+      "slug": "rapide",
+      "url": "https://rapide.jibiat.com"
+    }
+  }
+}

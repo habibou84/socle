@@ -1,5 +1,9 @@
 # Journal des versions
 
+## 1.2.0
+- Annuaire des entreprises de livraison (`directory`) et connexion en un clic (`connect-token`, flux PKCE décrit
+  dans le README), avec leurs exemples. Ajouts seulement : rien ne change pour la version 1.1.
+
 ## 1.1.0
 - `Contract\Contract` et `Contract\SchemaValidator` : contrat de l'API publique de Jibiat et de ses webhooks,
   `contract/v1` (14 schémas, 20 exemples), statuts et événements, règle de version (voir README).
