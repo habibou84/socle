@@ -1,0 +1,12 @@
+{
+  "$schema": "delivery-day",
+  "data": {
+    "closed": true,
+    "reason": "cutoff",
+    "message": "Heure limite 14:00 passée : livraison demain.",
+    "cutoff_time": "14:00",
+    "today": "{{today}}",
+    "next_day": "{{today+1}}",
+    "earliest_delivery_date": "{{today+1}}"
+  }
+}

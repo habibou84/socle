@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "order-response.json",
+  "title": "Réponse avec une course (GET, POST, PATCH /orders…)",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "$ref": "order.json"
+    }
+  }
+}

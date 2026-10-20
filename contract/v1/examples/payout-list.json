@@ -1,0 +1,16 @@
+{
+  "$schema": "payout-list",
+  "data": [
+    {
+      "reference": "RV-261020-00001",
+      "status": "paid",
+      "net_amount": 30300,
+      "paid_at": "{{now}}"
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "last_page": 1,
+    "total": 1
+  }
+}

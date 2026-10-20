@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "order-list.json",
+  "title": "Courses (GET /orders)",
+  "type": "object",
+  "required": [
+    "data",
+    "meta"
+  ],
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "order.json"
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "last_page"
+      ],
+      "properties": {
+        "last_page": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "order-webhook",
+  "id": "evt_03",
+  "event": "order.updated",
+  "created_at": "{{now}}",
+  "data": {
+    "order": {
+      "tracking_code": "LV-7K2M-QX9P",
+      "merchant_reference": "#1001-1",
+      "status": "rescheduled",
+      "status_label": "Reportée",
+      "tracking_url": "https://rapide.jibiat.com/suivi/LV-7K2M-QX9P",
+      "delivery_code": "4821",
+      "recipient": {
+        "name": "Fatou Diallo",
+        "phone": "+2250506070809",
+        "phone2": null
+      },
+      "delivery": {
+        "zone_id": 2,
+        "zone_name": "Angré",
+        "address": "Cité Arcades",
+        "landmark": "Face pharmacie",
+        "scheduled_date": "{{today+2}}"
+      },
+      "pickup": {
+        "hub_id": null,
+        "zone_id": 1,
+        "zone_name": "Cocody",
+        "address": "Boutique Awa Mode, Riviera 2",
+        "landmark": null,
+        "contact_name": "Awa Mode",
+        "phone": "+2250700000001"
+      },
+      "from_warehouse": false,
+      "description": "2 × Robe wax — S",
+      "items": [
+        {
+          "product_id": null,
+          "label": "Robe wax — S",
+          "quantity": 2,
+          "unit_price": 15750
+        }
+      ],
+      "amounts": {
+        "items_amount": 31500,
+        "delivery_fee": 1200,
+        "fee_payer": "merchant",
+        "cod_amount": 31500,
+        "collected_amount": null,
+        "shipping_fee": null
+      },
+      "attempts_count": 1,
+      "needs_decision": false,
+      "return_requested": false,
+      "last_incident": "Client absent",
+      "proof": {
+        "delivered_at": null,
+        "photos": []
+      },
+      "created_at": "{{now}}",
+      "updated_at": "{{now}}",
+      "delivered_at": null,
+      "cancelled_at": null,
+      "returned_at": null
+    },
+    "change": {
+      "type": "status_changed",
+      "from_status": "rescheduled",
+      "to_status": "rescheduled",
+      "incident": null,
+      "rescheduled_to": "{{today+2}}",
+      "note": null,
+      "fields": [
+        "delivery_scheduled_date"
+      ]
+    }
+  }
+}

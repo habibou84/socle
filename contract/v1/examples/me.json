@@ -1,0 +1,38 @@
+{
+  "$schema": "me",
+  "data": {
+    "merchant": {
+      "id": 12,
+      "business_name": "Awa Mode",
+      "contact_name": "Awa",
+      "phone": "+2250700000001",
+      "status": "active",
+      "default_fee_payer": "merchant"
+    },
+    "company": {
+      "name": "Rapide Express",
+      "slug": "rapide",
+      "url": "https://rapide.jibiat.com",
+      "phone": "+2252722000000"
+    },
+    "key": {
+      "name": "Jibiat Marchand",
+      "prefix": "abcd1234",
+      "scopes": [
+        "orders:read",
+        "orders:write",
+        "webhooks:write",
+        "payouts:read"
+      ],
+      "expires_at": null
+    },
+    "webhook_events": [
+      "order.created",
+      "order.status_changed",
+      "order.incident",
+      "order.updated",
+      "payout.paid",
+      "stock.low"
+    ]
+  }
+}

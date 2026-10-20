@@ -1,0 +1,19 @@
+{
+  "$schema": "payout-webhook",
+  "id": "evt_04",
+  "event": "payout.paid",
+  "created_at": "{{now}}",
+  "data": {
+    "payout": {
+      "reference": "RV-261020-00001",
+      "net_amount": 30300,
+      "total_collected": 31500,
+      "total_fees": 1200,
+      "method": "wave",
+      "transaction_ref": "WV-778899",
+      "period_start": "{{today-7}}",
+      "period_end": "{{today}}",
+      "paid_at": "{{now}}"
+    }
+  }
+}
