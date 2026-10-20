@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "webhook.json",
+  "title": "Webhook (corps signé, en-têtes X-Webhook-Id, X-Webhook-Event, X-Webhook-Timestamp, X-Webhook-Signature)",
+  "type": "object",
+  "required": [
+    "id",
+    "event",
+    "created_at",
+    "data"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "event": {
+      "type": "string",
+      "enum": [
+        "order.created",
+        "order.status_changed",
+        "order.incident",
+        "order.updated",
+        "payout.paid",
+        "stock.low"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "data": {
+      "type": "object"
+    }
+  }
+}

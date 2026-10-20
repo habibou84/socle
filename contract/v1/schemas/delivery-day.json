@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "delivery-day.json",
+  "title": "Journée de livraison (GET /delivery-day)",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "closed",
+        "message",
+        "earliest_delivery_date"
+      ],
+      "properties": {
+        "closed": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cutoff_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "today": {
+          "type": "string",
+          "format": "date"
+        },
+        "next_day": {
+          "type": "string",
+          "format": "date"
+        },
+        "earliest_delivery_date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}

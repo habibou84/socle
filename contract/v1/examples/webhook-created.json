@@ -1,0 +1,11 @@
+{
+  "$schema": "webhook-created",
+  "data": {
+    "id": 77,
+    "url": "https://awa.jibiat-marchand.com/webhooks/carriers/abc",
+    "events": [
+      "order.status_changed"
+    ]
+  },
+  "secret": "whsec_exemple"
+}

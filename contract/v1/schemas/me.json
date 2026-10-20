@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "me.json",
+  "title": "Compte (GET /me)",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "merchant",
+        "company",
+        "key",
+        "webhook_events"
+      ],
+      "properties": {
+        "merchant": {
+          "type": "object",
+          "required": [
+            "id",
+            "business_name"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "business_name": {
+              "type": "string"
+            }
+          }
+        },
+        "company": {
+          "type": "object",
+          "required": [
+            "name",
+            "slug",
+            "url"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "slug": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "key": {
+          "type": "object",
+          "required": [
+            "scopes"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "scopes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "webhook_events": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "order.created",
+              "order.status_changed",
+              "order.incident",
+              "order.updated",
+              "payout.paid",
+              "stock.low"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "order.json",
+  "title": "Course (PublicOrderResource)",
+  "description": "Champs obligatoires : ceux que Jibiat Marchand lit (RemoteShipment::fromDeliveryApp). Les autres sont décrits pour information.",
+  "type": "object",
+  "required": [
+    "tracking_code",
+    "merchant_reference",
+    "status",
+    "tracking_url",
+    "delivery_code",
+    "delivery",
+    "amounts",
+    "attempts_count",
+    "needs_decision",
+    "return_requested",
+    "last_incident",
+    "proof",
+    "updated_at"
+  ],
+  "properties": {
+    "tracking_code": {
+      "type": "string"
+    },
+    "merchant_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "rejected",
+        "pickup_assigned",
+        "pickup_in_progress",
+        "picked_up",
+        "at_hub",
+        "delivery_assigned",
+        "out_for_delivery",
+        "delivered",
+        "delivery_failed",
+        "rescheduled",
+        "return_assigned",
+        "returning",
+        "returned",
+        "cancelled",
+        "lost"
+      ]
+    },
+    "status_label": {
+      "type": "string"
+    },
+    "tracking_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "delivery_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "recipient": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phone2": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "required": [
+        "zone_id",
+        "address",
+        "scheduled_date"
+      ],
+      "properties": {
+        "zone_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "zone_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "address": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "landmark": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scheduled_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        }
+      }
+    },
+    "pickup": {
+      "type": "object"
+    },
+    "amounts": {
+      "type": "object",
+      "required": [
+        "items_amount",
+        "delivery_fee",
+        "fee_payer",
+        "cod_amount",
+        "collected_amount"
+      ],
+      "properties": {
+        "items_amount": {
+          "type": "integer"
+        },
+        "delivery_fee": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "fee_payer": {
+          "type": "string",
+          "enum": [
+            "merchant",
+            "recipient"
+          ]
+        },
+        "cod_amount": {
+          "type": "integer"
+        },
+        "collected_amount": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "shipping_fee": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    },
+    "attempts_count": {
+      "type": "integer"
+    },
+    "needs_decision": {
+      "type": "boolean"
+    },
+    "return_requested": {
+      "type": "boolean"
+    },
+    "last_incident": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "status",
+          "at"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "pending",
+              "confirmed",
+              "rejected",
+              "pickup_assigned",
+              "pickup_in_progress",
+              "picked_up",
+              "at_hub",
+              "delivery_assigned",
+              "out_for_delivery",
+              "delivered",
+              "delivery_failed",
+              "rescheduled",
+              "return_assigned",
+              "returning",
+              "returned",
+              "cancelled",
+              "lost",
+              null
+            ]
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "rescheduled_to": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "proof": {
+      "type": "object",
+      "required": [
+        "photos"
+      ],
+      "properties": {
+        "delivered_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "photos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "type",
+              "url"
+            ],
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "taken_at": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      }
+    },
+    "created_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "delivered_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "cancelled_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "returned_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    }
+  }
+}

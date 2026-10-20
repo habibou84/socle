@@ -1,0 +1,9 @@
+{
+  "$schema": "error",
+  "message": "Le champ téléphone est obligatoire.",
+  "errors": {
+    "recipient_phone": [
+      "Le champ téléphone est obligatoire."
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "payout-webhook.json",
+  "title": "Webhook payout.paid",
+  "type": "object",
+  "required": [
+    "id",
+    "event",
+    "created_at",
+    "data"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "event": {
+      "type": "string",
+      "enum": [
+        "payout.paid"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "payout"
+      ],
+      "properties": {
+        "payout": {
+          "type": "object",
+          "required": [
+            "reference",
+            "net_amount"
+          ],
+          "properties": {
+            "reference": {
+              "type": "string"
+            },
+            "net_amount": {
+              "type": "integer"
+            },
+            "total_collected": {
+              "type": "integer"
+            },
+            "total_fees": {
+              "type": "integer"
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "transaction_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "paid_at": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "payout.json",
+  "title": "Reversement (GET /payouts/{reference})",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "reference",
+        "net_amount",
+        "total_collected",
+        "total_fees",
+        "method",
+        "transaction_ref",
+        "paid_at",
+        "entries"
+      ],
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "net_amount": {
+          "type": "integer"
+        },
+        "total_collected": {
+          "type": "integer"
+        },
+        "total_fees": {
+          "type": "integer"
+        },
+        "method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "transaction_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "paid_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "type",
+              "amount",
+              "order"
+            ],
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "amount": {
+                "type": "integer"
+              },
+              "order": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "required": [
+                  "tracking_code"
+                ],
+                "properties": {
+                  "tracking_code": {
+                    "type": "string"
+                  },
+                  "merchant_reference": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
