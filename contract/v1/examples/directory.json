@@ -1,0 +1,50 @@
+{
+  "$schema": "directory",
+  "data": [
+    {
+      "slug": "rapide",
+      "name": "Rapide Express",
+      "url": "https://rapide.jibiat.com",
+      "connect_url": "https://rapide.jibiat.com/marchand/connecter",
+      "logo_url": "https://rapide.jibiat.com/branding/logo/rapide.png",
+      "pitch": "Livraison le jour même dans tout Abidjan, reversement chaque soir par Wave.",
+      "phone": "+2252722000000",
+      "cities": [
+        "Abidjan",
+        "Bingerville"
+      ],
+      "zones_count": 18,
+      "ships_inland": true,
+      "price_from": 1000,
+      "accepts": "signup",
+      "member_since": "2026-03-01",
+      "stats": {
+        "deliveries_90d": 4210,
+        "success_rate": 0.93,
+        "average_delivery_hours": 5.4
+      }
+    },
+    {
+      "slug": "awa-coursier",
+      "name": "Awa Coursier",
+      "url": "https://awa-coursier.jibiat.com",
+      "connect_url": "https://awa-coursier.jibiat.com/marchand/connecter",
+      "logo_url": null,
+      "pitch": null,
+      "phone": null,
+      "cities": [
+        "Bouaké"
+      ],
+      "zones_count": 4,
+      "ships_inland": false,
+      "price_from": null,
+      "accepts": "request",
+      "member_since": "2026-10-01",
+      "stats": {
+        "deliveries_90d": 12,
+        "success_rate": null,
+        "average_delivery_hours": null
+      }
+    }
+  ]
+}

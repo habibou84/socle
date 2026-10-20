@@ -19,7 +19,7 @@ Installation (dépôt public, versions étiquetées `vX.Y.Z`) :
 "require": { "habibou84/socle": "^1.0@dev" }
 ```
 
-La branche `main` porte la version 1.1.x (alias Composer `1.1.x-dev`) ; le `composer.lock` de chaque application
+La branche `main` porte la version 1.2.x (alias Composer `1.2.x-dev`) ; le `composer.lock` de chaque application
 fixe le commit exact. Toute modification passe par ce dépôt, puis `composer update habibou84/socle` dans chaque
 application. Quand des étiquettes `vX.Y.Z` seront publiées, les applications pourront exiger `^1.0`. La signature des webhooks fait partie du contrat entre les deux applications : ne la changez qu'avec
 une nouvelle version majeure.
@@ -40,7 +40,7 @@ Configuration (`config/services.php` de l'application) :
 
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
-  `webhook-created`, `error`). Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `webhook-created`, `error`, `directory`, `connect-token`). Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -59,6 +59,26 @@ Les deux côtés le testent :
   `Contract::WEBHOOK_EVENTS`.
 - **Jibiat Marchand** (client) simule Jibiat avec les exemples et vérifie qu'il les comprend tous (chaque statut
   a son équivalent, dates, décision attendue, retour, encaissement, photos).
+
+### Annuaire et connexion en un clic (1.2)
+
+**Annuaire** : `GET https://jibiat.com/api/public/directory` (sans clé), schéma `directory`. Seules les entreprises
+qui l'ont choisi y figurent. `stats` porte sur les 90 derniers jours ; `success_rate` (0 à 1) et
+`average_delivery_hours` valent `null` sous 20 courses. `accepts` : `signup` (le marchand ouvre son compte seul) ou
+`request` (sa demande est validée par l'entreprise).
+
+**Connexion en un clic** (autorisation de type OAuth 2 avec PKCE, sans secret) :
+
+1. Jibiat Marchand ouvre `connect_url` avec `client_id=jibiat-marchand`, `redirect_uri` (adresse de retour, hôte
+   déclaré chez Jibiat), `state`, `code_challenge` (SHA-256 en base64url du `code_verifier`),
+   `code_challenge_method=S256`, et pour préremplir : `business_name`, `phone`, `city`.
+2. Le marchand se connecte, ouvre son compte ou demande à devenir client, puis autorise l'accès.
+3. Retour sur `redirect_uri` avec `code` et `state` (valable 10 minutes, une seule fois) ; sinon `error` :
+   `access_denied` (refusé) ou `request_pending` (demande envoyée, l'entreprise doit la valider ; le marchand
+   recommence ensuite).
+4. `POST {url}/api/public/connect/token` avec `grant_type=authorization_code`, `client_id`, `code`,
+   `code_verifier`, `redirect_uri` : réponse `connect-token` (clé `lv_…` avec ses portées, dont `webhooks:write`).
+   Erreur : `400` avec `error` = `invalid_grant` ou `invalid_request`.
 
 **Règle de version** (`Contract::VERSION`) :
 
