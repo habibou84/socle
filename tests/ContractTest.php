@@ -79,4 +79,18 @@ class ContractTest extends TestCase
         $this->assertSame(Contract::WEBHOOK_EVENTS, $webhook['properties']['event']['enum']);
         $this->assertSame([], array_diff(Contract::ORDER_EVENTS, Contract::WEBHOOK_EVENTS));
     }
+
+    public function test_merchant_rating_tags_match_the_schema(): void
+    {
+        $ratings = Contract::schema('order')['properties']['ratings'];
+        $this->assertSame(array_keys(Contract::MERCHANT_RATING_TAGS), $ratings['properties']['merchant']['properties']['tags']['items']['enum']);
+
+        // Note inconnue refusée, course sans « ratings » (Jibiat plus ancien) toujours conforme
+        $rated = Contract::example('order-delivered-rated');
+        $rated['data']['ratings']['merchant']['score'] = 6;
+        $this->assertNotSame([], Contract::validate('order-response', $rated));
+        $old = Contract::example('order-delivered');
+        unset($old['data']['ratings']);
+        $this->assertSame([], Contract::validate('order-response', $old));
+    }
 }

@@ -1,5 +1,10 @@
 # Journal des versions
 
+## 1.3.0
+- Notation du livreur : champ facultatif `ratings` sur la course (`can_rate`, note de l'e-commerçant, note du
+  destinataire), `Contract::MERCHANT_RATING_TAGS`, action `POST /api/public/v1/orders/{tracking_code}/rating`
+  (README), exemple `order-delivered-rated`. Ajouts seulement : rien ne change pour la version 1.2.
+
 ## 1.2.0
 - Annuaire des entreprises de livraison (`directory`) et connexion en un clic (`connect-token`, flux PKCE décrit
   dans le README), avec leurs exemples. Ajouts seulement : rien ne change pour la version 1.1.

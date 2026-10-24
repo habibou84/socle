@@ -64,6 +64,11 @@
     "updated_at": "{{now}}",
     "delivered_at": "{{now}}",
     "cancelled_at": null,
-    "returned_at": null
+    "returned_at": null,
+    "ratings": {
+      "can_rate": true,
+      "merchant": null,
+      "recipient": null
+    }
   }
 }
