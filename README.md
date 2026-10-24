@@ -19,7 +19,7 @@ Installation (dépôt public, versions étiquetées `vX.Y.Z`) :
 "require": { "habibou84/socle": "^1.0@dev" }
 ```
 
-La branche `main` porte la version 1.2.x (alias Composer `1.2.x-dev`) ; le `composer.lock` de chaque application
+La branche `main` porte la version 1.3.x (alias Composer `1.3.x-dev`) ; le `composer.lock` de chaque application
 fixe le commit exact. Toute modification passe par ce dépôt, puis `composer update habibou84/socle` dans chaque
 application. Quand des étiquettes `vX.Y.Z` seront publiées, les applications pourront exiger `^1.0`. La signature des webhooks fait partie du contrat entre les deux applications : ne la changez qu'avec
 une nouvelle version majeure.
@@ -40,7 +40,7 @@ Configuration (`config/services.php` de l'application) :
 
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
-  `webhook-created`, `error`, `directory`, `connect-token`). Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `webhook-created`, `error`, `directory`, `connect-token`). La course porte `ratings` depuis la 1.3. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -79,6 +79,18 @@ qui l'ont choisi y figurent. `stats` porte sur les 90 derniers jours ; `success_
 4. `POST {url}/api/public/connect/token` avec `grant_type=authorization_code`, `client_id`, `code`,
    `code_verifier`, `redirect_uri` : réponse `connect-token` (clé `lv_…` avec ses portées, dont `webhooks:write`).
    Erreur : `400` avec `error` = `invalid_grant` ou `invalid_request`.
+
+### Notation du livreur (1.3)
+
+La course porte `ratings` (absent avec une version plus ancienne de Jibiat : rien à afficher) :
+
+- `can_rate` : l'e-commerçant peut noter le livreur (course livrée, pas encore notée, 7 jours au plus).
+- `merchant` : sa note (`score` de 1 à 5, `tags` parmi `Contract::MERCHANT_RATING_TAGS`, `comment`, `rated_at`), ou `null`.
+- `recipient` : la note laissée par son client (`score`, `comment`, `rated_at`), ou `null`. Anonyme : ni nom ni numéro.
+
+Noter : `POST /api/public/v1/orders/{tracking_code}/rating` (portée `orders:write`) avec `score` (1 à 5), `tags`
+(facultatif) et `comment` (facultatif, 500 caractères) ; réponse `order-response`. `422` si la course n'est pas
+livrée, déjà notée ou livrée depuis plus de 7 jours.
 
 **Règle de version** (`Contract::VERSION`) :
 

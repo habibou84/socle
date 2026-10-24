@@ -327,6 +327,101 @@
         "null"
       ],
       "format": "date-time"
+    },
+    "ratings": {
+      "type": "object",
+      "description": "Notes du livreur sur cette course (1.3). Absent avec une version plus ancienne de Jibiat.",
+      "required": [
+        "can_rate",
+        "merchant"
+      ],
+      "properties": {
+        "can_rate": {
+          "type": "boolean",
+          "description": "L'e-commerçant peut encore noter le livreur (course livrée, pas encore notée, 7 jours au plus)"
+        },
+        "merchant": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "score",
+            "tags",
+            "comment",
+            "rated_at"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "enum": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "pickup_on_time",
+                  "careful",
+                  "good_with_customers",
+                  "cash_returned",
+                  "pickup_late",
+                  "customer_mistreated",
+                  "unreachable"
+                ]
+              }
+            },
+            "comment": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "rated_at": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "recipient": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "score",
+            "rated_at"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "enum": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "comment": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "rated_at": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
     }
   }
 }

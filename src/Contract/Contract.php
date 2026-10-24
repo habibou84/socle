@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.2';
+    public const VERSION = '1.3';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -28,6 +28,20 @@ final class Contract
 
     /** Événements qui portent une course dans data.order */
     public const ORDER_EVENTS = ['order.created', 'order.status_changed', 'order.incident', 'order.updated'];
+
+    /**
+     * Remarques de l'e-commerçant quand il note le livreur (champ « ratings.merchant.tags », POST …/rating) :
+     * les quatre premières sont des points forts, les autres des points à améliorer.
+     */
+    public const MERCHANT_RATING_TAGS = [
+        'pickup_on_time' => 'Ramassage à l\'heure',
+        'careful' => 'Colis bien traité',
+        'good_with_customers' => 'Bon contact avec mes clients',
+        'cash_returned' => 'Argent bien rendu',
+        'pickup_late' => 'Ramassage en retard',
+        'customer_mistreated' => 'Client mal traité',
+        'unreachable' => 'Pas joignable',
+    ];
 
     public static function path(string $relative = ''): string
     {
