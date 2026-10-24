@@ -44,4 +44,21 @@ class PhoneNumberTest extends TestCase
         $this->assertNull(PhoneNumber::normalize($input));
         $this->assertFalse(PhoneNumber::isValid($input));
     }
+
+    public function test_old_ivorian_whatsapp_numbers_match_their_new_number(): void
+    {
+        $this->assertSame('+2250747123456', PhoneNumber::modernize('+22547123456'));
+        $this->assertSame('+2250555123456', PhoneNumber::modernize('+22555123456'));
+        $this->assertSame('+2250102123456', PhoneNumber::modernize('+22502123456'));
+        $this->assertSame('+2250171123456', PhoneNumber::modernize('+22571123456'));
+        $this->assertSame('+2250707123456', PhoneNumber::modernize('+2250707123456'));
+        $this->assertSame('+22520123456', PhoneNumber::modernize('+22520123456'));
+        $this->assertSame('+33612345678', PhoneNumber::modernize('+33612345678'));
+
+        $this->assertTrue(PhoneNumber::sameNumber('+2250747123456', '+2250747123456'));
+        $this->assertTrue(PhoneNumber::sameNumber('0747123456', '+22547123456'));
+        $this->assertFalse(PhoneNumber::sameNumber('+2250147123456', '+22547123456'));
+        $this->assertFalse(PhoneNumber::sameNumber('+2250747123456', '+2250547123456'));
+        $this->assertFalse(PhoneNumber::sameNumber(null, '+22547123456'));
+    }
 }

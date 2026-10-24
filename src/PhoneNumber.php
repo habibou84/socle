@@ -68,6 +68,38 @@ class PhoneNumber
         return (bool) preg_match('/^\+'.self::DEFAULT_COUNTRY_CODE.'0[157]\d{8}$/', (string) self::normalize($value));
     }
 
+    /**
+     * Numéro ivoirien d'avant 2021 (8 chiffres après +225) mis à 10 chiffres. Beaucoup de comptes WhatsApp n'ont
+     * jamais changé de numéro et écrivent encore sous l'ancien : +225 47 12 34 56 est aujourd'hui +225 07 47 12 34 56.
+     * Mobiles seulement, selon le 2e chiffre de l'ancien numéro : 0 à 3 → 01 (Moov), 4 à 6 → 05 (MTN), 7 à 9 → 07
+     * (Orange). Tout autre numéro est rendu normalisé, sans changement.
+     */
+    public static function modernize(?string $value): ?string
+    {
+        $normalized = self::normalize($value);
+        if ($normalized === null || ! preg_match('/^\+'.self::DEFAULT_COUNTRY_CODE.'([04-9])(\d)(\d{6})$/', $normalized, $m)) {
+            return $normalized;
+        }
+        $prefix = match (true) {
+            $m[2] <= '3' => '01',
+            $m[2] <= '6' => '05',
+            default => '07',
+        };
+
+        return '+'.self::DEFAULT_COUNTRY_CODE.$prefix.$m[1].$m[2].$m[3];
+    }
+
+    /**
+     * Le numéro qui écrit sur WhatsApp est-il bien celui attendu ? Accepte l'ancien format ivoirien à 8 chiffres
+     * (voir modernize) pour le même numéro.
+     */
+    public static function sameNumber(?string $expected, ?string $sender): bool
+    {
+        $expected = self::normalize($expected);
+
+        return $expected !== null && ($expected === self::normalize($sender) || $expected === self::modernize($sender));
+    }
+
     public static function isValid(?string $value): bool
     {
         return self::normalize($value) !== null;
