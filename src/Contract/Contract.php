@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.3';
+    public const VERSION = '1.4';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -42,6 +42,9 @@ final class Contract
         'customer_mistreated' => 'Client mal traité',
         'unreachable' => 'Pas joignable',
     ];
+
+    /** Statuts de l'abonnement Jibiat Marchand d'un marchand parrainé (champ « plan.status » de merchant-app) */
+    public const MERCHANT_APP_PLAN_STATUSES = ['trialing', 'active', 'past_due', 'cancelled', 'expired', 'none'];
 
     public static function path(string $relative = ''): string
     {
