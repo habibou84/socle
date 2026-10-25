@@ -40,7 +40,7 @@ Configuration (`config/services.php` de l'application) :
 
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
-  `webhook-created`, `error`, `directory`, `connect-token`). La course porte `ratings` depuis la 1.3. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`). La course porte `ratings` depuis la 1.3. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -91,6 +91,21 @@ La course porte `ratings` (absent avec une version plus ancienne de Jibiat : rie
 Noter : `POST /api/public/v1/orders/{tracking_code}/rating` (portée `orders:write`) avec `score` (1 à 5), `tags`
 (facultatif) et `comment` (facultatif, 500 caractères) ; réponse `order-response`. `422` si la course n'est pas
 livrée, déjà notée ou livrée depuis plus de 7 jours.
+
+### Parrainage des marchands par les entreprises (1.4)
+
+Une entreprise invite ses marchands sur Jibiat Marchand (lien `…/creer-ma-boutique?partenaire={slug}`) ; elle reçoit
+une part de l'abonnement de chaque marchand parrainé (taux et durée dans `commission`), payée par Jibiat Marchand.
+
+Jibiat Marchand tient l'entreprise informée avec la clé de la connexion du marchand à cette entreprise :
+`PUT /api/public/v1/merchant-app` (toute portée), corps = l'objet `data` du schéma `merchant-app` sans `reported_at` ;
+réponse `merchant-app` (ce que Jibiat a enregistré, avec `reported_at`). Envoyé seulement pour une boutique parrainée
+par l'entreprise de la clé (`referred` vaut alors `true`), à chaque paiement d'abonnement et une fois par jour.
+
+- `plan.status` : parmi `Contract::MERCHANT_APP_PLAN_STATUSES` (`none` : pas d'abonnement).
+- `commission` : `rate` (0 à 1), `months` (durée à compter du premier paiement), `ends_at` (`null` avant le premier
+  paiement), montants entiers en `currency` : `earned_total` (gagné depuis le début), `earned_month` (mois en cours),
+  `paid_total` (déjà versé à l'entreprise).
 
 **Règle de version** (`Contract::VERSION`) :
 

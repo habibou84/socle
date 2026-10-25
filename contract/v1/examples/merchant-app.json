@@ -1,0 +1,23 @@
+{
+  "$schema": "merchant-app",
+  "data": {
+    "store_name": "Awa Mode",
+    "store_url": "https://awa-mode.jibiat-marchand.com",
+    "referred": true,
+    "signed_up_at": "{{today}}T09:30:00+00:00",
+    "plan": {
+      "name": "Essentiel",
+      "status": "active"
+    },
+    "commission": {
+      "rate": 0.2,
+      "months": 12,
+      "ends_at": "{{today+365}}",
+      "currency": "XOF",
+      "earned_total": 3000,
+      "earned_month": 1000,
+      "paid_total": 2000
+    },
+    "reported_at": "{{now}}"
+  }
+}

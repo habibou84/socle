@@ -1,5 +1,10 @@
 # Journal des versions
 
+## 1.4.0
+- Parrainage des marchands par les entreprises de livraison : schéma et exemple `merchant-app`
+  (`PUT /api/public/v1/merchant-app`, README), `Contract::MERCHANT_APP_PLAN_STATUSES`. Ajouts seulement : rien ne
+  change pour la version 1.3.
+
 ## 1.3.1
 - `PhoneNumber::modernize()` et `PhoneNumber::sameNumber()` : un compte WhatsApp encore sous l'ancien numéro
   ivoirien à 8 chiffres (+225 47 12 34 56) est reconnu comme le numéro à 10 chiffres (+225 07 47 12 34 56).
