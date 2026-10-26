@@ -1,5 +1,10 @@
 # Journal des versions
 
+## 1.5.0
+- Étiquette de la course : champ facultatif `label_url` (lien signé vers l'étiquette à imprimer, sans connexion,
+  valable 7 jours, renouvelé à chaque lecture de la course ou webhook), dans les exemples de course et de webhook.
+  Ajout seulement : rien ne change pour la version 1.4.
+
 ## 1.4.0
 - Parrainage des marchands par les entreprises de livraison : schéma et exemple `merchant-app`
   (`PUT /api/public/v1/merchant-app`, README), `Contract::MERCHANT_APP_PLAN_STATUSES`. Ajouts seulement : rien ne
