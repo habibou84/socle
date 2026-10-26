@@ -6,6 +6,7 @@
     "status": "picked_up",
     "status_label": "Colis récupéré",
     "tracking_url": "https://rapide.jibiat.com/suivi/LV-7K2M-QX9P",
+    "label_url": "https://rapide.jibiat.com/etiquette-partagee/983/1767225600/3f9c2a7d1b8e4f60a5c3d2e1f0b9a8c7d6e5f4a3",
     "delivery_code": "4821",
     "recipient": {
       "name": "Fatou Diallo",

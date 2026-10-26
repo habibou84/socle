@@ -19,7 +19,7 @@ Installation (dépôt public, versions étiquetées `vX.Y.Z`) :
 "require": { "habibou84/socle": "^1.0@dev" }
 ```
 
-La branche `main` porte la version 1.3.x (alias Composer `1.3.x-dev`) ; le `composer.lock` de chaque application
+La branche `main` porte la version 1.5.x (alias Composer `1.5.x-dev`) ; le `composer.lock` de chaque application
 fixe le commit exact. Toute modification passe par ce dépôt, puis `composer update habibou84/socle` dans chaque
 application. Quand des étiquettes `vX.Y.Z` seront publiées, les applications pourront exiger `^1.0`. La signature des webhooks fait partie du contrat entre les deux applications : ne la changez qu'avec
 une nouvelle version majeure.
@@ -40,7 +40,7 @@ Configuration (`config/services.php` de l'application) :
 
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
-  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`). La course porte `ratings` depuis la 1.3. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -106,6 +106,13 @@ par l'entreprise de la clé (`referred` vaut alors `true`), à chaque paiement d
 - `commission` : `rate` (0 à 1), `months` (durée à compter du premier paiement), `ends_at` (`null` avant le premier
   paiement), montants entiers en `currency` : `earned_total` (gagné depuis le début), `earned_month` (mois en cours),
   `paid_total` (déjà versé à l'entreprise).
+
+### Étiquette de la course (1.5)
+
+La course porte `label_url` (absent avec une version plus ancienne de Jibiat : pas de bouton) : l'étiquette
+10 × 15 cm à imprimer (QR code de suivi, expéditeur, destinataire, montant à encaisser selon les réglages de
+l'entreprise), ouverte sans connexion. Le lien est signé et valable 7 jours : prenez celui de la dernière lecture de
+la course ou du dernier webhook, ne le gardez pas plus longtemps. L'impression est notée chez l'entreprise.
 
 **Règle de version** (`Contract::VERSION`) :
 
