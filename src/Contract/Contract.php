@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.5';
+    public const VERSION = '1.6';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -45,6 +45,24 @@ final class Contract
 
     /** Statuts de l'abonnement Jibiat Marchand d'un marchand parrainé (champ « plan.status » de merchant-app) */
     public const MERCHANT_APP_PLAN_STATUSES = ['trialing', 'active', 'past_due', 'cancelled', 'expired', 'none'];
+
+    /**
+     * États d'une carte Membre Premium Jibiat Marchand (champ « state » de premium-card) : pas encore activée,
+     * mois offerts en cours, réduction en cours (le marchand livre toujours avec l'entreprise), réduction arrêtée
+     * (il ne livre plus avec elle), annulée.
+     */
+    public const PREMIUM_CARD_STATES = ['available', 'free', 'discount', 'lapsed', 'revoked'];
+
+    /** Origine d'une carte Premium (champ « reason » de premium-card-request) : offerte à la main ou gagnée */
+    public const PREMIUM_CARD_REASONS = ['manual', 'automatic'];
+
+    /**
+     * En-têtes des appels de Jibiat à Jibiat Marchand pour les cartes Premium (secret partagé entre les deux
+     * serveurs, signature WebhookSignature).
+     */
+    public const PARTNER_SIGNATURE_HEADER = 'X-Jibiat-Signature';
+
+    public const PARTNER_TIMESTAMP_HEADER = 'X-Jibiat-Timestamp';
 
     public static function path(string $relative = ''): string
     {

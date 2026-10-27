@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "premium-card-list.json",
+  "title": "Cartes Membre Premium offertes par une entreprise (GET /api/partners/v1/premium-cards?company={slug})",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "number",
+          "label",
+          "url",
+          "state",
+          "plan",
+          "free_months",
+          "discount_rate",
+          "offered_by",
+          "merchant_reference",
+          "created_at"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "number": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "available",
+              "free",
+              "discount",
+              "lapsed",
+              "revoked"
+            ]
+          },
+          "plan": {
+            "type": "string"
+          },
+          "free_months": {
+            "type": "integer"
+          },
+          "discount_rate": {
+            "type": "number"
+          },
+          "free_until": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "offered_by": {
+            "type": "object",
+            "required": [
+              "slug",
+              "name"
+            ],
+            "properties": {
+              "slug": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "merchant_reference": {
+            "type": "string"
+          },
+          "store": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "name",
+              "url"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
+          },
+          "activated_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "created_at": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

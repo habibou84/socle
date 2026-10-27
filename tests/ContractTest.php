@@ -25,7 +25,7 @@ class ContractTest extends TestCase
 
     public function test_every_schema_is_valid_json(): void
     {
-        $this->assertCount(17, Contract::schemas());
+        $this->assertCount(20, Contract::schemas());
         foreach (Contract::schemas() as $name) {
             $this->assertIsArray(Contract::schema($name), $name);
         }

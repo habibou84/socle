@@ -1,0 +1,22 @@
+{
+  "$schema": "premium-card",
+  "data": {
+    "code": "K7M4Q2XP",
+    "number": 7,
+    "label": "Membre Premium Jibiat Marchand n° 007",
+    "url": "https://jibiat-marchand.com/cle/K7M4Q2XP",
+    "plan": "Pro",
+    "free_months": 6,
+    "discount_rate": 0.3,
+    "offered_by": {
+      "slug": "livraison-express-ci",
+      "name": "Livraison Express CI"
+    },
+    "state": "available",
+    "free_until": null,
+    "merchant_reference": "128",
+    "store": null,
+    "activated_at": null,
+    "created_at": "{{now}}"
+  }
+}

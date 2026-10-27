@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "premium-card-request.json",
+  "title": "Demande d'une carte Membre Premium Jibiat Marchand par une entreprise de Jibiat (POST /api/partners/v1/premium-cards)",
+  "type": "object",
+  "required": [
+    "company",
+    "merchant",
+    "reason"
+  ],
+  "properties": {
+    "company": {
+      "type": "object",
+      "required": [
+        "slug",
+        "name"
+      ],
+      "properties": {
+        "slug": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "merchant": {
+      "type": "object",
+      "required": [
+        "reference",
+        "name",
+        "phone"
+      ],
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "automatic"
+      ]
+    },
+    "stats": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "delivered_90d": {
+          "type": "integer"
+        },
+        "success_rate": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "client_since": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}
