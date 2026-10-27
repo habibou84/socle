@@ -40,7 +40,7 @@ Configuration (`config/services.php` de l'application) :
 
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
-  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -113,6 +113,28 @@ La course porte `label_url` (absent avec une version plus ancienne de Jibiat : p
 10 × 15 cm à imprimer (QR code de suivi, expéditeur, destinataire, montant à encaisser selon les réglages de
 l'entreprise), ouverte sans connexion. Le lien est signé et valable 7 jours : prenez celui de la dernière lecture de
 la course ou du dernier webhook, ne le gardez pas plus longtemps. L'impression est notée chez l'entreprise.
+
+### Cartes Membre Premium Jibiat Marchand (1.6)
+
+Une entreprise de Jibiat offre à ses meilleurs marchands la carte « Membre Premium Jibiat Marchand » : à la main,
+ou toute seule quand le marchand remplit les conditions de l'entreprise (carte automatique). C'est **Jibiat** qui
+appelle **Jibiat Marchand**, de serveur à serveur, avec un secret partagé (variable d'environnement des deux côtés,
+jamais dans le code) :
+
+- `X-Jibiat-Timestamp` (secondes) et `X-Jibiat-Signature` = `WebhookSignature::sign(secret, timestamp, contenu)`,
+  refusé au-delà de 5 minutes. Le contenu signé est le corps brut pour `POST`, le chemin avec sa requête pour `GET`
+  et `DELETE` (ex. `/api/partners/v1/premium-cards?company=livraison-express-ci`). `401` si la signature est fausse.
+- `POST {Jibiat Marchand}/api/partners/v1/premium-cards`, corps `premium-card-request` : `201` et `premium-card`
+  (carte créée), ou `200` et la carte déjà offerte à ce marchand (`company.slug` + `merchant.reference`) si elle
+  n'est pas annulée. `merchant.reference` est l'identifiant du marchand chez Jibiat.
+- `GET …/premium-cards?company={slug}` : `premium-card-list`, les cartes de l'entreprise, les plus récentes d'abord.
+- `DELETE …/premium-cards/{code}?company={slug}` : annule une carte de l'entreprise ; réponse `premium-card`.
+
+La carte : `url` (page du QR code, où le marchand ouvre ou rattache sa boutique ; la boutique créée est parrainée par
+l'entreprise, voir 1.4), `label` à afficher tel quel, offre `plan` pendant `free_months` mois à partir de
+l'activation (`free_until`), puis `discount_rate` (0 à 1) de réduction sur l'abonnement tant que le marchand livre
+avec l'entreprise. `state` parmi `Contract::PREMIUM_CARD_STATES`. Qui paie les cartes et combien chaque entreprise
+peut en offrir se règle chez Jibiat ; l'offre (offre, mois, réduction) se règle chez Jibiat Marchand.
 
 **Règle de version** (`Contract::VERSION`) :
 

@@ -1,5 +1,12 @@
 # Journal des versions
 
+## 1.6.0
+- Cartes Membre Premium Jibiat Marchand offertes par les entreprises de Jibiat : schémas et exemples
+  `premium-card-request`, `premium-card`, `premium-card-list` (`POST`, `GET` et `DELETE /api/partners/v1/premium-cards`
+  chez Jibiat Marchand, README), `Contract::PREMIUM_CARD_STATES`, `Contract::PREMIUM_CARD_REASONS`, en-têtes de
+  signature `Contract::PARTNER_SIGNATURE_HEADER` et `Contract::PARTNER_TIMESTAMP_HEADER`. Ajouts seulement : rien
+  ne change pour la version 1.5.
+
 ## 1.5.0
 - Étiquette de la course : champ facultatif `label_url` (lien signé vers l'étiquette à imprimer, sans connexion,
   valable 7 jours, renouvelé à chaque lecture de la course ou webhook), dans les exemples de course et de webhook.

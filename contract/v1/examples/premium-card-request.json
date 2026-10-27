@@ -1,0 +1,20 @@
+{
+  "$schema": "premium-card-request",
+  "company": {
+    "slug": "livraison-express-ci",
+    "name": "Livraison Express CI",
+    "phone": "+2250700000000"
+  },
+  "merchant": {
+    "reference": "128",
+    "name": "Awa Mode",
+    "phone": "+2250708091011",
+    "email": null
+  },
+  "reason": "automatic",
+  "stats": {
+    "delivered_90d": 52,
+    "success_rate": 0.91,
+    "client_since": "{{today-200}}"
+  }
+}

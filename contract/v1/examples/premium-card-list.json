@@ -1,0 +1,46 @@
+{
+  "$schema": "premium-card-list",
+  "data": [
+    {
+      "code": "R3T9W6HD",
+      "number": 3,
+      "label": "Membre Premium Jibiat Marchand n° 003",
+      "url": "https://jibiat-marchand.com/cle/R3T9W6HD",
+      "plan": "Pro",
+      "free_months": 6,
+      "discount_rate": 0.3,
+      "offered_by": {
+        "slug": "livraison-express-ci",
+        "name": "Livraison Express CI"
+      },
+      "state": "free",
+      "free_until": "{{today+150}}",
+      "merchant_reference": "94",
+      "store": {
+        "name": "Mode Akwaba",
+        "url": "https://mode-akwaba.jibiat-marchand.com"
+      },
+      "activated_at": "{{today-30}}T10:12:00+00:00",
+      "created_at": "{{today-32}}T08:00:00+00:00"
+    },
+    {
+      "code": "K7M4Q2XP",
+      "number": 7,
+      "label": "Membre Premium Jibiat Marchand n° 007",
+      "url": "https://jibiat-marchand.com/cle/K7M4Q2XP",
+      "plan": "Pro",
+      "free_months": 6,
+      "discount_rate": 0.3,
+      "offered_by": {
+        "slug": "livraison-express-ci",
+        "name": "Livraison Express CI"
+      },
+      "state": "available",
+      "free_until": null,
+      "merchant_reference": "128",
+      "store": null,
+      "activated_at": null,
+      "created_at": "{{now}}"
+    }
+  ]
+}
