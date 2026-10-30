@@ -10,6 +10,7 @@ sans logique métier (voir `docs/PLAN.md` §4.5) :
 | `Rules\PhoneNumber` | Règle de validation Laravel |
 | `Sms\SmsGateway`, `Sms\LogSmsGateway`, `Sms\TwilioSmsGateway` | Envoi de SMS (pilote `log` en développement) |
 | `Webhooks\WebhookSignature` | Signature et vérification HMAC des webhooks (`X-Webhook-Signature`) |
+| `Places\Places` | Liste commune des lieux (villes, communes, quartiers), codes fixes, recherche dans un texte |
 | `Contract\Contract` | Contrat de l'API publique de Jibiat et de ses webhooks (schémas, exemples, statuts, événements) |
 
 Installation (dépôt public, versions étiquetées `vX.Y.Z`) :
@@ -19,7 +20,7 @@ Installation (dépôt public, versions étiquetées `vX.Y.Z`) :
 "require": { "habibou84/socle": "^1.0@dev" }
 ```
 
-La branche `main` porte la version 1.5.x (alias Composer `1.5.x-dev`) ; le `composer.lock` de chaque application
+La branche `main` porte la version 1.7.x (alias Composer `1.7.x-dev`) ; le `composer.lock` de chaque application
 fixe le commit exact. Toute modification passe par ce dépôt, puis `composer update habibou84/socle` dans chaque
 application. Quand des étiquettes `vX.Y.Z` seront publiées, les applications pourront exiger `^1.0`. La signature des webhooks fait partie du contrat entre les deux applications : ne la changez qu'avec
 une nouvelle version majeure.
@@ -59,6 +60,26 @@ Les deux côtés le testent :
   `Contract::WEBHOOK_EVENTS`.
 - **Jibiat Marchand** (client) simule Jibiat avec les exemples et vérifie qu'il les comprend tous (chaque statut
   a son équivalent, dates, décision attendue, retour, encaissement, photos).
+
+### Lieux communs (1.7)
+
+Les deux applications utilisent la même liste de lieux, `Jibiat\Socle\Places\Places` :
+
+```php
+use Jibiat\Socle\Places\Places;
+
+Places::all();                     // [['code' => 'abidjan-cocody-angre', 'type' => 'neighborhood', 'name' => 'Angré', 'parent' => 'abidjan-cocody', 'aliases' => []], …]
+Places::label('abidjan-cocody-angre');   // « Angré, Cocody »
+Places::lineage('abidjan-cocody-angre'); // ['abidjan-cocody-angre', 'abidjan-cocody', 'abidjan']
+Places::inText('yop siporex');      // le quartier Siporex de Yopougon (le plus précis d'abord)
+Places::named('riv 3');             // Riviera 3, par son nom ou une variante exacte
+```
+
+Un code ne change jamais. Chez Jibiat, chaque zone d'une entreprise porte le code de son lieu (`place` dans
+`GET /zones`, `null` pour une zone propre à l'entreprise). Pour créer une course (`POST /orders`) ou demander un
+devis (`POST /quotes`), Jibiat Marchand peut envoyer `delivery_place` et `pickup_place` (codes) à la place de
+`delivery_zone_id` et `pickup_zone_id` : Jibiat prend la zone de ce lieu, sinon celle du lieu qui le contient
+(quartier, puis commune). Un identifiant de zone envoyé passe avant le code.
 
 ### Annuaire et connexion en un clic (1.2)
 

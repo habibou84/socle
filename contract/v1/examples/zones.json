@@ -6,21 +6,24 @@
       "parent_id": null,
       "name": "Cocody",
       "is_shipping": false,
-      "is_active": true
+      "is_active": true,
+      "place": "abidjan-cocody"
     },
     {
       "id": 2,
       "parent_id": 1,
       "name": "Angré",
       "is_shipping": false,
-      "is_active": true
+      "is_active": true,
+      "place": "abidjan-cocody-angre"
     },
     {
       "id": 3,
       "parent_id": null,
       "name": "Yopougon",
       "is_shipping": false,
-      "is_active": true
+      "is_active": true,
+      "place": null
     }
   ]
 }

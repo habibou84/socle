@@ -1,5 +1,13 @@
 # Journal des versions
 
+## 1.7.0
+- Liste commune des lieux : `Places\Places` (Abidjan, ses communes et leurs quartiers, principales villes), codes
+  fixes (`abidjan-cocody-angre`), variantes d'écriture, `all()`, `find()`, `label()`, `lineage()`, `inText()`,
+  `named()`, `normalize()`. Reprend la liste de Jibiat Marchand.
+- Contrat : champ facultatif `place` (code du lieu, ou `null`) sur chaque zone de `GET /zones` ; à la création
+  d'une course et pour un devis, `delivery_place` et `pickup_place` (codes) remplacent au besoin `delivery_zone_id`
+  et `pickup_zone_id` (README). Ajouts seulement : rien ne change pour la version 1.6.
+
 ## 1.6.0
 - Cartes Membre Premium Jibiat Marchand offertes par les entreprises de Jibiat : schémas et exemples
   `premium-card-request`, `premium-card`, `premium-card-list` (`POST`, `GET` et `DELETE /api/partners/v1/premium-cards`
