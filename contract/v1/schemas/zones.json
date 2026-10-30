@@ -36,6 +36,13 @@
           },
           "is_active": {
             "type": "boolean"
+          },
+          "place": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Code du lieu de la liste commune (Jibiat\\Socle\\Places\\Places), null pour une zone propre à l'entreprise. Depuis la 1.7."
           }
         }
       }
