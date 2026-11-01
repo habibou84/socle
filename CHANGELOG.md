@@ -1,5 +1,10 @@
 # Journal des versions
 
+## 1.8.0
+- Cartes Membre Premium : champ facultatif `offer` (`plan`, `free_months`, `discount_rate`) dans
+  `premium-card-request`, la formule choisie par l'entreprise ; `Contract::PREMIUM_CARD_PLANS`. Ajouts seulement :
+  rien ne change pour la version 1.7.
+
 ## 1.7.0
 - Liste commune des lieux : `Places\Places` (Abidjan, ses communes et leurs quartiers, principales villes), codes
   fixes (`abidjan-cocody-angre`), variantes d'écriture, `all()`, `find()`, `label()`, `lineage()`, `inText()`,

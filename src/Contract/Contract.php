@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.7';
+    public const VERSION = '1.8';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -55,6 +55,9 @@ final class Contract
 
     /** Origine d'une carte Premium (champ « reason » de premium-card-request) : offerte à la main ou gagnée */
     public const PREMIUM_CARD_REASONS = ['manual', 'automatic'];
+
+    /** Formules Jibiat Marchand qu'une entreprise peut offrir avec une carte (champ « offer.plan », depuis 1.8) */
+    public const PREMIUM_CARD_PLANS = ['starter', 'pro', 'business'];
 
     /**
      * En-têtes des appels de Jibiat à Jibiat Marchand pour les cartes Premium (secret partagé entre les deux

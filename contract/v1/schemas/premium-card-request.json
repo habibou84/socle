@@ -84,6 +84,38 @@
           ]
         }
       }
+    },
+    "offer": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Depuis 1.8 : formule choisie par l'entreprise pour cette carte (sinon, celle réglée chez Jibiat Marchand)",
+      "required": [
+        "plan",
+        "free_months",
+        "discount_rate"
+      ],
+      "properties": {
+        "plan": {
+          "type": "string",
+          "enum": [
+            "starter",
+            "pro",
+            "business"
+          ]
+        },
+        "free_months": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 36
+        },
+        "discount_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.9
+        }
+      }
     }
   }
 }
