@@ -157,6 +157,11 @@ l'activation (`free_until`), puis `discount_rate` (0 à 1) de réduction sur l'a
 avec l'entreprise. `state` parmi `Contract::PREMIUM_CARD_STATES`. Qui paie les cartes et combien chaque entreprise
 peut en offrir se règle chez Jibiat ; l'offre (offre, mois, réduction) se règle chez Jibiat Marchand.
 
+Depuis 1.8, la demande peut porter `offer` (`plan` parmi `Contract::PREMIUM_CARD_PLANS`, `free_months` de 0 à 36,
+`discount_rate` de 0 à 0,9) : la formule choisie par l'entreprise, dans les limites fixées par la console Jibiat.
+Jibiat Marchand l'applique à la carte ; sans `offer`, il applique sa formule par défaut. La carte rendue décrit
+toujours la formule réellement appliquée.
+
 **Règle de version** (`Contract::VERSION`) :
 
 - *Ajouter* un champ, un statut, un événement ou un exemple : version 1.x suivante. Jibiat Marchand doit d'abord
