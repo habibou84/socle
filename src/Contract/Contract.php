@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.8';
+    public const VERSION = '1.9';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -41,6 +41,27 @@ final class Contract
         'pickup_late' => 'Ramassage en retard',
         'customer_mistreated' => 'Client mal traité',
         'unreachable' => 'Pas joignable',
+    ];
+
+    /**
+     * Motifs d'annulation donnés par l'e-commerçant (champ « cancellation.reason » quand « by » = merchant,
+     * et « reason_code » de POST …/cancel). « other » demande une précision écrite.
+     */
+    public const CANCEL_REASONS_MERCHANT = [
+        'customer_cancelled' => 'Le client a annulé sa commande',
+        'out_of_stock' => 'Produit en rupture',
+        'order_mistake' => 'Erreur dans la course',
+        'self_delivery' => 'Je livre moi-même',
+        'other' => 'Autre',
+    ];
+
+    /** Motifs d'annulation ou de refus donnés par l'entreprise de livraison (« cancellation.reason » quand « by » = company) */
+    public const CANCEL_REASONS_COMPANY = [
+        'merchant_request' => 'Demande de l\'e-commerçant',
+        'recipient_unreachable' => 'Client injoignable avant le ramassage',
+        'out_of_area' => 'Adresse hors zone desservie',
+        'duplicate' => 'Course en double',
+        'other' => 'Autre',
     ];
 
     /** Statuts de l'abonnement Jibiat Marchand d'un marchand parrainé (champ « plan.status » de merchant-app) */

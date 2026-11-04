@@ -1,5 +1,11 @@
 # Journal des versions
 
+## 1.9.0
+- Annulation : champ facultatif `cancellation` sur la course (`by` merchant ou company, `name`, `role`, `reason`,
+  `reason_label`, `note`, `rejected`, `cancelled_at`), `Contract::CANCEL_REASONS_MERCHANT`,
+  `Contract::CANCEL_REASONS_COMPANY`, `reason_code` sur `POST …/cancel`, exemple `order-cancelled`. Ajouts seulement :
+  rien ne change pour la version 1.8 (une annulation sans `reason_code` reste acceptée avec une précision `reason`).
+
 ## 1.8.0
 - Cartes Membre Premium : champ facultatif `offer` (`plan`, `free_months`, `discount_rate`) dans
   `premium-card-request`, la formule choisie par l'entreprise ; `Contract::PREMIUM_CARD_PLANS`. Ajouts seulement :
