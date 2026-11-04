@@ -31,6 +31,20 @@ class ContractTest extends TestCase
         }
     }
 
+    public function test_a_cancellation_says_who_and_why(): void
+    {
+        $cancellation = Contract::example('order-cancelled')['data']['cancellation'];
+
+        $this->assertSame('company', $cancellation['by']);
+        $this->assertArrayHasKey($cancellation['reason'], Contract::CANCEL_REASONS_COMPANY);
+        $this->assertSame(Contract::CANCEL_REASONS_COMPANY[$cancellation['reason']], $cancellation['reason_label']);
+        $this->assertArrayHasKey('other', Contract::CANCEL_REASONS_MERCHANT);
+
+        $wrong = Contract::example('order-cancelled');
+        $wrong['data']['cancellation']['by'] = 'courier';
+        $this->assertNotSame([], Contract::validate('order-response', $wrong));
+    }
+
     public function test_relative_dates_are_replaced(): void
     {
         $order = Contract::example('order-scheduled-tomorrow')['data'];

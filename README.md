@@ -41,7 +41,7 @@ Configuration (`config/services.php` de l'application) :
 
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
-  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -112,6 +112,20 @@ La course porte `ratings` (absent avec une version plus ancienne de Jibiat : rie
 Noter : `POST /api/public/v1/orders/{tracking_code}/rating` (portée `orders:write`) avec `score` (1 à 5), `tags`
 (facultatif) et `comment` (facultatif, 500 caractères) ; réponse `order-response`. `422` si la course n'est pas
 livrée, déjà notée ou livrée depuis plus de 7 jours.
+
+### Annulation : qui et pourquoi (1.9)
+
+La course porte `cancellation` (`null` tant qu'elle n'est pas annulée ; absent avec une version plus ancienne de Jibiat) :
+
+- `by` : `merchant` (l'e-commerçant) ou `company` (l'entreprise de livraison) ; `name` : la personne, `role` : son rôle
+  dans l'entreprise (`null` côté e-commerçant).
+- `reason` : code du motif, parmi `Contract::CANCEL_REASONS_MERCHANT` ou `Contract::CANCEL_REASONS_COMPANY` selon
+  `by` (`null` pour une annulation ancienne sans motif) ; `reason_label` ; `note` : la précision écrite.
+- `rejected` : `true` quand l'entreprise a refusé la course à la création (statut `rejected`) ; `cancelled_at`.
+
+Annuler : `POST /api/public/v1/orders/{tracking_code}/cancel` (portée `orders:write`) avec `reason_code` parmi
+`Contract::CANCEL_REASONS_MERCHANT` et `reason` (précision, obligatoire avec `other`). Un motif est obligatoire :
+`reason_code`, ou à défaut `reason` seul (compté comme `other`). Exemple : `order-cancelled`.
 
 ### Parrainage des marchands par les entreprises (1.4)
 

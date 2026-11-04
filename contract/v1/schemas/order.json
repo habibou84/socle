@@ -429,6 +429,70 @@
           }
         }
       }
+    },
+    "cancellation": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Annulation de la course (1.9) : qui, pourquoi. null tant qu'elle n'est pas annulée ; absent avec une version plus ancienne de Jibiat.",
+      "required": [
+        "by",
+        "reason",
+        "cancelled_at"
+      ],
+      "properties": {
+        "by": {
+          "type": "string",
+          "enum": [
+            "merchant",
+            "company"
+          ],
+          "description": "merchant : l'e-commerçant ; company : l'entreprise de livraison"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Prénom ou nom de la personne qui a annulé (null si inconnu)"
+        },
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Rôle de la personne dans l'entreprise (Dispatch, Administrateur…), null côté e-commerçant"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Code du motif : Contract::CANCEL_REASONS_MERCHANT ou Contract::CANCEL_REASONS_COMPANY selon « by » ; null pour une annulation plus ancienne sans motif"
+        },
+        "reason_label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Précision écrite par la personne"
+        },
+        "rejected": {
+          "type": "boolean",
+          "description": "Course refusée par l'entreprise à la création (statut rejected) plutôt qu'annulée"
+        },
+        "cancelled_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
     }
   }
 }
