@@ -1,0 +1,72 @@
+{
+  "$schema": "order-response",
+  "data": {
+    "tracking_code": "LV-9TQ4-R2KD",
+    "merchant_reference": "#1001-1",
+    "status": "pickup_assigned",
+    "status_label": "Ramassage assigné",
+    "tracking_url": "https://rapide.jibiat.com/suivi/LV-9TQ4-R2KD",
+    "label_url": "https://rapide.jibiat.com/etiquette-partagee/983/1767225600/3f9c2a7d1b8e4f60a5c3d2e1f0b9a8c7d6e5f4a3",
+    "delivery_code": "4821",
+    "recipient": {
+      "name": "Fatou Diallo",
+      "phone": "+2250506070809",
+      "phone2": null
+    },
+    "delivery": {
+      "zone_id": 2,
+      "zone_name": "Angré",
+      "address": "Cité Arcades",
+      "landmark": "Face pharmacie",
+      "scheduled_date": "{{today-1}}"
+    },
+    "pickup": {
+      "hub_id": null,
+      "zone_id": 1,
+      "zone_name": "Cocody",
+      "address": "Boutique Awa Mode, Riviera 2",
+      "landmark": null,
+      "contact_name": "Awa Mode",
+      "phone": "+2250700000001"
+    },
+    "from_warehouse": false,
+    "description": "2 × Robe wax — S",
+    "items": [
+      {
+        "product_id": null,
+        "label": "Robe wax — S",
+        "quantity": 2,
+        "unit_price": 15750
+      }
+    ],
+    "amounts": {
+      "items_amount": 31500,
+      "delivery_fee": 1200,
+      "fee_payer": "merchant",
+      "cod_amount": 31500,
+      "collected_amount": null,
+      "shipping_fee": null
+    },
+    "attempts_count": 0,
+    "needs_decision": false,
+    "return_requested": false,
+    "last_incident": null,
+    "proof": {
+      "delivered_at": null,
+      "photos": []
+    },
+    "created_at": "{{now}}",
+    "updated_at": "{{now}}",
+    "delivered_at": null,
+    "cancelled_at": null,
+    "returned_at": null,
+    "cancellation": null,
+    "reschedule": {
+      "status": "pending",
+      "missed_day": "{{today-1}}",
+      "requested_at": "{{now}}",
+      "max_date": "{{today+14}}",
+      "answer_url": "https://rapide.jibiat.com/reporter/K7PQ2xZ81mWd"
+    }
+  }
+}

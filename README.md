@@ -41,7 +41,7 @@ Configuration (`config/services.php` de l'application) :
 
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
-  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9, `reschedule` depuis la 1.10. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -126,6 +126,22 @@ La course porte `cancellation` (`null` tant qu'elle n'est pas annulée ; absent 
 Annuler : `POST /api/public/v1/orders/{tracking_code}/cancel` (portée `orders:write`) avec `reason_code` parmi
 `Contract::CANCEL_REASONS_MERCHANT` et `reason` (précision, obligatoire avec `other`). Un motif est obligatoire :
 `reason_code`, ou à défaut `reason` seul (compté comme `other`). Exemple : `order-cancelled`.
+
+### Colis pas ramassé à sa date : nouvelle date (1.10)
+
+Quand un colis n'a pas été ramassé à son jour de livraison, l'entreprise demande à l'e-commerçant une nouvelle date
+(message du soir ou demande du dispatch). Tant que la réponse est attendue, la course porte `reschedule` (`null`
+sinon ; absent avec une version plus ancienne de Jibiat) et elle n'apparaît plus chez les livreurs :
+
+- `status` : `pending` ; `missed_day` : le jour de livraison passé ; `requested_at` ; `max_date` : date la plus
+  lointaine acceptée (aujourd'hui + `Contract::RESCHEDULE_MAX_DAYS` jours) ; `answer_url` : page de réponse sans
+  connexion (lien personnel), ou `null`.
+
+Répondre : `POST /api/public/v1/orders/{tracking_code}/reschedule` (portée `orders:write`) avec `date`
+(`YYYY-MM-DD`, d'aujourd'hui à `max_date`) ; réponse `order-response`, `reschedule` repasse à `null` et la course
+revient chez les livreurs à cette date. Annuler : `POST …/cancel` comme d'habitude. Le même report reste possible
+sans demande en cours (colis pas encore ramassé). Un événement `order.updated` part à chaque changement.
+Exemple : `order-reschedule-requested`.
 
 ### Parrainage des marchands par les entreprises (1.4)
 

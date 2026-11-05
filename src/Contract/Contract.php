@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.9';
+    public const VERSION = '1.10';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -63,6 +63,12 @@ final class Contract
         'duplicate' => 'Course en double',
         'other' => 'Autre',
     ];
+
+    /**
+     * Report d'un colis pas ramassé à sa date (champ « reschedule », depuis 1.10) : date la plus lointaine acceptée,
+     * en jours après aujourd'hui, pour POST …/reschedule.
+     */
+    public const RESCHEDULE_MAX_DAYS = 14;
 
     /** Statuts de l'abonnement Jibiat Marchand d'un marchand parrainé (champ « plan.status » de merchant-app) */
     public const MERCHANT_APP_PLAN_STATUSES = ['trialing', 'active', 'past_due', 'cancelled', 'expired', 'none'];
