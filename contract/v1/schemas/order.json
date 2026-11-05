@@ -493,6 +493,49 @@
           "format": "date-time"
         }
       }
+    },
+    "reschedule": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Nouvelle date demandée (1.10) : le colis n'a pas pu être ramassé à sa date de livraison ; l'entreprise demande à l'e-commerçant de reporter ou d'annuler. null quand rien n'est demandé ; absent avec une version plus ancienne de Jibiat.",
+      "required": [
+        "status",
+        "missed_day",
+        "requested_at",
+        "max_date"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending"
+          ],
+          "description": "pending : la réponse est attendue (la course disparaît de la liste des livreurs tant que la date n'est pas actualisée)"
+        },
+        "missed_day": {
+          "type": "string",
+          "format": "date",
+          "description": "Jour de livraison prévu qui est passé sans ramassage"
+        },
+        "requested_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "max_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date la plus lointaine acceptée pour le report (Contract::RESCHEDULE_MAX_DAYS jours)"
+        },
+        "answer_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Page de réponse sans connexion (lien personnel), pour qui ne répond pas par l'API"
+        }
+      }
     }
   }
 }

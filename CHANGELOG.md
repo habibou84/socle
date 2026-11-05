@@ -1,5 +1,10 @@
 # Journal des versions
 
+## 1.10.0
+- Colis pas ramassé à sa date : champ facultatif `reschedule` sur la course (`status` pending, `missed_day`,
+  `requested_at`, `max_date`, `answer_url`), `Contract::RESCHEDULE_MAX_DAYS`, `POST …/reschedule` avec `date`,
+  exemple `order-reschedule-requested`. Ajouts seulement : rien ne change pour la version 1.9.
+
 ## 1.9.0
 - Annulation : champ facultatif `cancellation` sur la course (`by` merchant ou company, `name`, `role`, `reason`,
   `reason_label`, `note`, `rejected`, `cancelled_at`), `Contract::CANCEL_REASONS_MERCHANT`,

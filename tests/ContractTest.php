@@ -45,6 +45,21 @@ class ContractTest extends TestCase
         $this->assertNotSame([], Contract::validate('order-response', $wrong));
     }
 
+    public function test_a_reschedule_request_gives_the_missed_day_and_the_limit(): void
+    {
+        $reschedule = Contract::example('order-reschedule-requested')['data']['reschedule'];
+
+        $this->assertSame('pending', $reschedule['status']);
+        $this->assertSame(date('Y-m-d', strtotime('-1 day')), $reschedule['missed_day']);
+        $this->assertSame(date('Y-m-d', strtotime('+'.Contract::RESCHEDULE_MAX_DAYS.' days')), $reschedule['max_date']);
+        // Pas de demande : null ; absent pour une version plus ancienne
+        $this->assertNull(Contract::example('order-cancelled')['data']['reschedule'] ?? null);
+
+        $wrong = Contract::example('order-reschedule-requested');
+        $wrong['data']['reschedule']['status'] = 'answered';
+        $this->assertNotSame([], Contract::validate('order-response', $wrong));
+    }
+
     public function test_relative_dates_are_replaced(): void
     {
         $order = Contract::example('order-scheduled-tomorrow')['data'];
