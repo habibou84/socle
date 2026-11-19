@@ -50,6 +50,7 @@
     "attempts_count": 1,
     "needs_decision": false,
     "return_requested": true,
+    "return_cause": "merchant",
     "last_incident": "Client injoignable",
     "proof": {
       "delivered_at": null,
