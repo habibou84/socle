@@ -1,5 +1,10 @@
 # Journal des versions
 
+## 1.11.0
+- Raison du retour : champ facultatif `return_cause` sur la course (`refused`, `max_attempts`, `company`, `merchant`
+  ou `null`), `Contract::RETURN_CAUSES` (phrase à montrer à l'e-commerçant), exemple `order-refused`. Ajouts
+  seulement : rien ne change pour la version 1.10.
+
 ## 1.10.0
 - Colis pas ramassé à sa date : champ facultatif `reschedule` sur la course (`status` pending, `missed_day`,
   `requested_at`, `max_date`, `answer_url`), `Contract::RESCHEDULE_MAX_DAYS`, `POST …/reschedule` avec `date`,

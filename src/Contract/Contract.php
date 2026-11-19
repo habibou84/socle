@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.10';
+    public const VERSION = '1.11';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -62,6 +62,17 @@ final class Contract
         'out_of_area' => 'Adresse hors zone desservie',
         'duplicate' => 'Course en double',
         'other' => 'Autre',
+    ];
+
+    /**
+     * Pourquoi le colis repart chez l'e-commerçant (champ « return_cause », depuis 1.11) : phrase à lui montrer.
+     * Le retour n'est « demandé » par lui que pour merchant ; les autres sont décidés par le client ou l'entreprise.
+     */
+    public const RETURN_CAUSES = [
+        'refused' => 'Refusé par le client : le colis vous sera retourné',
+        'max_attempts' => 'Tentatives épuisées : le colis vous sera retourné',
+        'company' => 'L\'entreprise de livraison vous retourne le colis',
+        'merchant' => 'Vous avez demandé le retour',
     ];
 
     /**

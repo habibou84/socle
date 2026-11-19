@@ -192,6 +192,20 @@
     "return_requested": {
       "type": "boolean"
     },
+    "return_cause": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "refused",
+        "max_attempts",
+        "company",
+        "merchant",
+        null
+      ],
+      "description": "Pourquoi le colis repart chez l'e-commerçant (1.11) : refused (refusé par le client), max_attempts (tentatives épuisées), company (décision de l'entreprise), merchant (demandé par l'e-commerçant). null sans retour ; absent avec une version plus ancienne de Jibiat. Libellés : Contract::RETURN_CAUSES."
+    },
     "last_incident": {
       "type": [
         "string",
