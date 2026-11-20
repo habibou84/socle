@@ -25,7 +25,7 @@ class ContractTest extends TestCase
 
     public function test_every_schema_is_valid_json(): void
     {
-        $this->assertCount(20, Contract::schemas());
+        $this->assertCount(24, Contract::schemas());
         foreach (Contract::schemas() as $name) {
             $this->assertIsArray(Contract::schema($name), $name);
         }
@@ -121,5 +121,44 @@ class ContractTest extends TestCase
         $old = Contract::example('order-delivered');
         unset($old['data']['ratings']);
         $this->assertSame([], Contract::validate('order-response', $old));
+    }
+
+    public function test_direct_connection_statuses_match_the_schemas(): void
+    {
+        $this->assertSame(Contract::CONNECT_DIRECT_STATUSES, Contract::schema('connect-direct')['properties']['data']['properties']['status']['enum']);
+        $this->assertSame(Contract::CONNECT_DECISION_STATUSES, Contract::schema('connect-decision')['properties']['status']['enum']);
+        $this->assertSame([], array_diff(Contract::CONNECT_DECISION_STATUSES, Contract::CONNECT_DIRECT_STATUSES));
+        $this->assertSame(24, Contract::CONNECT_DIRECT_WAIT_HOURS);
+    }
+
+    public function test_a_direct_connection_gives_the_key_only_once_connected(): void
+    {
+        $this->assertNotNull(Contract::example('connect-direct-connected')['data']['connection']['api_key']);
+        $this->assertNull(Contract::example('connect-direct-pending')['data']['connection']);
+        $this->assertNull(Contract::example('connect-direct-confirmation')['data']['connection']);
+        $this->assertNull(Contract::example('connect-decision-declined')['connection']);
+
+        // Un téléphone non vérifié n'est pas une demande valable
+        $request = Contract::example('connect-direct-request');
+        unset($request['owner']['phone_verified_at']);
+        $this->assertNotSame([], Contract::validate('connect-direct-request', $request));
+
+        $unknown = Contract::example('connect-decision-connected');
+        $unknown['status'] = 'pending';
+        $this->assertNotSame([], Contract::validate('connect-decision', $unknown));
+    }
+
+    public function test_a_directory_without_direct_still_respects_the_contract(): void
+    {
+        $directory = Contract::example('directory');
+        foreach ($directory['data'] as $i => $company) {
+            unset($directory['data'][$i]['direct']);
+        }
+        $this->assertSame([], Contract::validate('directory', $directory));
+
+        $quotes = Contract::example('directory-quotes')['data'];
+        $this->assertTrue($quotes[0]['covered']);
+        $this->assertIsInt($quotes[0]['total']);
+        $this->assertNull($quotes[1]['total']);
     }
 }

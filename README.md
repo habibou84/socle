@@ -41,7 +41,8 @@ Configuration (`config/services.php` de l'application) :
 
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
-  `webhook-created`, `error`, `directory`, `connect-token`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9, `reschedule` depuis la 1.10. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `webhook-created`, `error`, `directory`, `directory-quotes`, `connect-token`, `connect-direct-request`, `connect-direct`,
+  `connect-decision`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9, `reschedule` depuis la 1.10. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -191,6 +192,54 @@ Depuis 1.8, la demande peut porter `offer` (`plan` parmi `Contract::PREMIUM_CARD
 `discount_rate` de 0 à 0,9) : la formule choisie par l'entreprise, dans les limites fixées par la console Jibiat.
 Jibiat Marchand l'applique à la carte ; sans `offer`, il applique sa formule par défaut. La carte rendue décrit
 toujours la formule réellement appliquée.
+
+### Connexion directe et devis de l'annuaire (1.11)
+
+Jibiat Marchand ouvre le compte d'une boutique chez une entreprise **sans redirection, sans mot de passe et sans
+code** : les deux serveurs se parlent directement. Le marchand touche « Travailler avec … » (écran des entreprises
+ou choix du livreur d'une commande) et confirme qu'il partage les informations de sa boutique. La connexion en un
+clic de la 1.2 reste valable (applications tierces, entreprises qui n'ont pas `direct`).
+
+**Signature** : comme pour les cartes Premium (1.6), `X-Jibiat-Timestamp` et `X-Jibiat-Signature` =
+`WebhookSignature::sign(secret, timestamp, contenu)`, refusé au-delà de 5 minutes, dans les deux sens. Le secret
+est celui du client `jibiat-marchand` (variable d'environnement des deux côtés, jamais dans le code). Contenu signé :
+le corps brut pour `POST`, le chemin avec sa requête pour `GET` et `DELETE`. `401` si la signature est fausse.
+
+**Devis de l'annuaire** : `POST https://jibiat.com/api/public/directory/quotes` (sans clé ni signature) avec
+`delivery_place` (code du lieu, obligatoire), `pickup_place`, `weight_kg`, `fragile` et `slugs` (facultatifs) ;
+réponse `directory-quotes`, une ligne par entreprise de l'annuaire qui a `direct`. `total` est le prix de la grille
+par défaut de l'entreprise, celle que reçoit un nouveau marchand : c'est le prix qui sera appliqué après la
+connexion. `covered` à `false` : l'entreprise ne livre pas ce lieu (`total` à `null`, `message` dit pourquoi).
+
+**Connexion directe** : `POST {url}/api/public/connect/direct`, corps `connect-direct-request`, réponse
+`connect-direct` (`201` à la création, `200` si `request_id` est déjà connu : même demande, même réponse).
+
+- `owner.phone_verified_at` est obligatoire : seul un téléphone vérifié par Jibiat Marchand est accepté.
+- `consent_at` : moment où le marchand a accepté de partager les informations de sa boutique.
+- `waiting_orders` : colis qui attendent déjà l'ouverture du compte (affiché à l'entreprise) ; avec au moins un colis,
+  `decide_before` = maintenant + `Contract::CONNECT_DIRECT_WAIT_HOURS` heures.
+- `activity` (facultatif, avec l'accord du marchand) : aperçu de son activité pour aider l'entreprise à décider.
+
+`status` parmi `Contract::CONNECT_DIRECT_STATUSES` :
+
+- `connected` : nouveau marchand et inscriptions ouvertes ; compte créé, `connection` porte la clé (`api_key`,
+  `scopes`, `merchant`). La clé ne passe que de serveur à serveur.
+- `pending` : inscriptions sur demande ; l'entreprise est prévenue et décide. `connection` à `null`.
+- `confirmation` : le téléphone a déjà un compte chez l'entreprise. Il n'est **jamais** rattaché sans l'accord du
+  marchand : Jibiat lui demande sur WhatsApp « Oui / Non ».
+- `declined`, `cancelled`, `expired` : fin de la demande, `reason` dit pourquoi quand l'entreprise l'a écrit.
+
+Suivre ou annuler : `GET {url}/api/public/connect/direct/{request_id}` et `DELETE …/{request_id}` (signés), réponse
+`connect-direct`. Une demande annulée ou expirée ne peut plus être acceptée.
+
+**Décision** : dès que la demande `pending` ou `confirmation` est tranchée ou expire, Jibiat appelle
+`POST {Jibiat Marchand}/api/partners/v1/connections` (signé), corps `connect-decision` (`status` parmi
+`Contract::CONNECT_DECISION_STATUSES`, `connection` avec la clé quand `connected`). Jibiat Marchand répond `200` ; sans
+réponse, Jibiat réessaie, et Jibiat Marchand peut toujours relire l'état par `GET`. Une décision déjà reçue pour le
+même `request_id` est ignorée.
+
+Exemples : `directory-quotes`, `connect-direct-request`, `connect-direct-connected`, `connect-direct-pending`,
+`connect-direct-confirmation`, `connect-decision-connected`, `connect-decision-declined`. L'annuaire porte `direct`.
 
 **Règle de version** (`Contract::VERSION`) :
 

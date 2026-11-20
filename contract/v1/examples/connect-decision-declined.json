@@ -1,0 +1,13 @@
+{
+  "$schema": "connect-decision",
+  "request_id": "9b2f6c1e-4d7a-4f0e-a1c3-5e8d2b7f9a10",
+  "status": "declined",
+  "company": {
+    "name": "Awa Coursier",
+    "slug": "awa-coursier",
+    "url": "https://awa-coursier.jibiat.com"
+  },
+  "connection": null,
+  "reason": "Nous ne livrons pas encore votre commune de ramassage.",
+  "decided_at": "{{now}}"
+}

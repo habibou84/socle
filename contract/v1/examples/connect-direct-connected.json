@@ -1,0 +1,29 @@
+{
+  "$schema": "connect-direct",
+  "data": {
+    "request_id": "9b2f6c1e-4d7a-4f0e-a1c3-5e8d2b7f9a10",
+    "status": "connected",
+    "company": {
+      "name": "Rapide Express",
+      "slug": "rapide",
+      "url": "https://rapide.jibiat.com"
+    },
+    "connection": {
+      "api_key": "lv_abcd1234_AbCdEfGhIjKlMnOpQrStUvWxYz0123456789ABCD",
+      "scopes": [
+        "orders:read",
+        "orders:write",
+        "webhooks:write",
+        "payouts:read",
+        "stock:read"
+      ],
+      "merchant": {
+        "id": 12,
+        "business_name": "Awa Mode"
+      }
+    },
+    "decide_before": null,
+    "reason": null,
+    "message": "Compte ouvert chez Rapide Express."
+  }
+}

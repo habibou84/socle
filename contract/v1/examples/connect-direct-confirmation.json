@@ -1,0 +1,16 @@
+{
+  "$schema": "connect-direct",
+  "data": {
+    "request_id": "0c7d1a2b-3e4f-4a5b-8c9d-0e1f2a3b4c5d",
+    "status": "confirmation",
+    "company": {
+      "name": "Rapide Express",
+      "slug": "rapide",
+      "url": "https://rapide.jibiat.com"
+    },
+    "connection": null,
+    "decide_before": null,
+    "reason": null,
+    "message": "Vous avez déjà un compte chez Rapide Express : confirmez sur WhatsApp."
+  }
+}

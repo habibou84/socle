@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "connect-direct-request.json",
+  "title": "Connexion directe demandée par Jibiat Marchand, de serveur à serveur, requête signée (POST {url}/api/public/connect/direct)",
+  "type": "object",
+  "required": [
+    "client_id",
+    "request_id",
+    "store",
+    "owner",
+    "consent_at"
+  ],
+  "properties": {
+    "client_id": {
+      "type": "string"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "store": {
+      "type": "object",
+      "required": [
+        "reference",
+        "name"
+      ],
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "owner": {
+      "type": "object",
+      "required": [
+        "name",
+        "phone",
+        "phone_verified_at"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "phone_verified_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "pickup": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "place": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "address": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "consent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "waiting_orders": {
+      "type": "integer"
+    },
+    "decide_before": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "activity": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "orders_30d": {
+          "type": "integer"
+        },
+        "since": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        }
+      }
+    },
+    "message": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

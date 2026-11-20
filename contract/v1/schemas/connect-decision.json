@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "connect-decision.json",
+  "title": "Décision sur une connexion directe, envoyée par Jibiat à Jibiat Marchand, requête signée (POST {Jibiat Marchand}/api/partners/v1/connections)",
+  "type": "object",
+  "required": [
+    "request_id",
+    "status",
+    "company",
+    "connection",
+    "decided_at"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "connected",
+        "declined",
+        "expired"
+      ]
+    },
+    "company": {
+      "type": "object",
+      "required": [
+        "name",
+        "slug",
+        "url"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "connection": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "api_key",
+        "scopes",
+        "merchant"
+      ],
+      "properties": {
+        "api_key": {
+          "type": "string"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "merchant": {
+          "type": "object",
+          "required": [
+            "id",
+            "business_name"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "business_name": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

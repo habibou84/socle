@@ -22,7 +22,8 @@
         "deliveries_90d": 4210,
         "success_rate": 0.93,
         "average_delivery_hours": 5.4
-      }
+      },
+      "direct": true
     },
     {
       "slug": "awa-coursier",
@@ -44,7 +45,8 @@
         "deliveries_90d": 12,
         "success_rate": null,
         "average_delivery_hours": null
-      }
+      },
+      "direct": true
     }
   ]
 }

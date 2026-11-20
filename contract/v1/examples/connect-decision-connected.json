@@ -1,0 +1,26 @@
+{
+  "$schema": "connect-decision",
+  "request_id": "9b2f6c1e-4d7a-4f0e-a1c3-5e8d2b7f9a10",
+  "status": "connected",
+  "company": {
+    "name": "Awa Coursier",
+    "slug": "awa-coursier",
+    "url": "https://awa-coursier.jibiat.com"
+  },
+  "connection": {
+    "api_key": "lv_efgh5678_ZyXwVuTsRqPoNmLkJiHgFeDcBa9876543210ZYXW",
+    "scopes": [
+      "orders:read",
+      "orders:write",
+      "webhooks:write",
+      "payouts:read",
+      "stock:read"
+    ],
+    "merchant": {
+      "id": 7,
+      "business_name": "Awa Mode"
+    }
+  },
+  "reason": null,
+  "decided_at": "{{now}}"
+}
