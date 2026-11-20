@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.11';
+    public const VERSION = '1.12';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -65,6 +65,17 @@ final class Contract
     ];
 
     /**
+     * Pourquoi le colis repart chez l'e-commerçant (champ « return_cause », depuis 1.11) : phrase à lui montrer.
+     * Le retour n'est « demandé » par lui que pour merchant ; les autres sont décidés par le client ou l'entreprise.
+     */
+    public const RETURN_CAUSES = [
+        'refused' => 'Refusé par le client : le colis vous sera retourné',
+        'max_attempts' => 'Tentatives épuisées : le colis vous sera retourné',
+        'company' => 'L\'entreprise de livraison vous retourne le colis',
+        'merchant' => 'Vous avez demandé le retour',
+    ];
+
+    /**
      * Report d'un colis pas ramassé à sa date (champ « reschedule », depuis 1.10) : date la plus lointaine acceptée,
      * en jours après aujourd'hui, pour POST …/reschedule.
      */
@@ -95,17 +106,17 @@ final class Contract
     public const PARTNER_TIMESTAMP_HEADER = 'X-Jibiat-Timestamp';
 
     /**
-     * États d'une connexion directe (champ « status » de connect-direct, depuis 1.11) : compte ouvert et clé donnée,
+     * États d'une connexion directe (champ « status » de connect-direct, depuis 1.12) : compte ouvert et clé donnée,
      * demande à valider par l'entreprise, compte existant à confirmer par le marchand (WhatsApp), refusée, annulée
      * par Jibiat Marchand, expirée (pas de décision avant « decide_before »).
      */
     public const CONNECT_DIRECT_STATUSES = ['connected', 'pending', 'confirmation', 'declined', 'cancelled', 'expired'];
 
-    /** Décisions envoyées par Jibiat à Jibiat Marchand (champ « status » de connect-decision, depuis 1.11) */
+    /** Décisions envoyées par Jibiat à Jibiat Marchand (champ « status » de connect-decision, depuis 1.12) */
     public const CONNECT_DECISION_STATUSES = ['connected', 'declined', 'expired'];
 
     /**
-     * Délai de décision de l'entreprise quand un colis attend l'ouverture du compte (« decide_before », depuis 1.11) :
+     * Délai de décision de l'entreprise quand un colis attend l'ouverture du compte (« decide_before », depuis 1.12) :
      * passé ce délai, la demande expire et la commande revient « à assigner » chez Jibiat Marchand.
      */
     public const CONNECT_DIRECT_WAIT_HOURS = 24;

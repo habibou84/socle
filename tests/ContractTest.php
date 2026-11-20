@@ -45,6 +45,22 @@ class ContractTest extends TestCase
         $this->assertNotSame([], Contract::validate('order-response', $wrong));
     }
 
+    public function test_a_return_says_why_the_parcel_goes_back(): void
+    {
+        $this->assertSame('refused', Contract::example('order-refused')['data']['return_cause']);
+        $this->assertSame('merchant', Contract::example('order-return-requested')['data']['return_cause']);
+        $this->assertSame(['refused', 'max_attempts', 'company', 'merchant'], array_keys(Contract::RETURN_CAUSES));
+
+        $wrong = Contract::example('order-refused');
+        $wrong['data']['return_cause'] = 'lost';
+        $this->assertNotSame([], Contract::validate('order-response', $wrong));
+
+        // Champ facultatif : une course d'une version plus ancienne de Jibiat reste valable
+        $old = Contract::example('order-refused');
+        unset($old['data']['return_cause']);
+        $this->assertSame([], Contract::validate('order-response', $old));
+    }
+
     public function test_a_reschedule_request_gives_the_missed_day_and_the_limit(): void
     {
         $reschedule = Contract::example('order-reschedule-requested')['data']['reschedule'];

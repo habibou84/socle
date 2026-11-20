@@ -42,7 +42,7 @@ Configuration (`config/services.php` de l'application) :
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
   `webhook-created`, `error`, `directory`, `directory-quotes`, `connect-token`, `connect-direct-request`, `connect-direct`,
-  `connect-decision`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9, `reschedule` depuis la 1.10. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `connect-decision`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9, `reschedule` depuis la 1.10, `return_cause` depuis la 1.11. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -144,6 +144,15 @@ revient chez les livreurs à cette date. Annuler : `POST …/cancel` comme d'hab
 sans demande en cours (colis pas encore ramassé). Un événement `order.updated` part à chaque changement.
 Exemple : `order-reschedule-requested`.
 
+### Pourquoi le colis repart : `return_cause` (1.11)
+
+Quand `return_requested` vaut `true`, la course porte `return_cause` (`null` sans retour ; absent avec une version
+plus ancienne de Jibiat) : `refused` (le client a refusé le colis), `max_attempts` (tentatives épuisées), `company`
+(décision de l'entreprise) ou `merchant` (l'e-commerçant l'a demandé). Le retour n'est donc « demandé » par
+l'e-commerçant que pour `merchant` : afficher la phrase de `Contract::RETURN_CAUSES`, pas « Retour demandé ».
+Une valeur inconnue doit s'afficher comme un retour sans raison précise. Exemples : `order-refused`,
+`order-return-requested`.
+
 ### Parrainage des marchands par les entreprises (1.4)
 
 Une entreprise invite ses marchands sur Jibiat Marchand (lien `…/creer-ma-boutique?partenaire={slug}`) ; elle reçoit
@@ -193,7 +202,7 @@ Depuis 1.8, la demande peut porter `offer` (`plan` parmi `Contract::PREMIUM_CARD
 Jibiat Marchand l'applique à la carte ; sans `offer`, il applique sa formule par défaut. La carte rendue décrit
 toujours la formule réellement appliquée.
 
-### Connexion directe et devis de l'annuaire (1.11)
+### Connexion directe et devis de l'annuaire (1.12)
 
 Jibiat Marchand ouvre le compte d'une boutique chez une entreprise **sans redirection, sans mot de passe et sans
 code** : les deux serveurs se parlent directement. Le marchand touche « Travailler avec … » (écran des entreprises
