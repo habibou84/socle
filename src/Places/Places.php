@@ -18,36 +18,89 @@ final class Places
 
     public const NEIGHBORHOOD = 'neighborhood';
 
-    /** Communes d'Abidjan : [variantes, quartiers (nom ou nom => variantes)] */
+    /**
+     * Communes du district d'Abidjan : [variantes, quartiers (nom ou nom => variantes)]. Un code ne change jamais :
+     * on ajoute des quartiers, on n'en renomme ni n'en retire (référentiel tenu par la plateforme, version 1.13).
+     */
     private const ABIDJAN = [
-        'Abobo' => [['abobo'], ['Abobo Gare', 'Abobo Baoulé', 'PK 18', 'Avocatier', 'Anador', 'Sagbé', "N'Dotré", 'Belleville', 'Akéikoi', 'Samaké']],
-        'Adjamé' => [['adjame'], ['Liberté', '220 Logements', 'Williamsville', 'Bracodi', 'Paillet', 'Dallas']],
-        'Anyama' => [['anyama'], []],
-        'Attécoubé' => [['attecoube'], ['Santé', 'Locodjro', 'Agban', 'Abobo-Doumé']],
-        'Bingerville' => [['binger'], []],
+        'Abobo' => [['abobo'], [
+            'Abobo Gare', 'Abobo Baoulé', 'PK 18', 'Avocatier', 'Anador', 'Sagbé', "N'Dotré", 'Belleville', 'Akéikoi', 'Samaké',
+            'Abobo Té', 'Derrière Rails' => ['derriere rail'], 'Plateau Dokui' => ['dokui'], 'Agbekoi', 'Anonkoua Kouté' => ['anonkoua'],
+            'Biabou', 'Bocabo', 'Clouetcha', 'Sogefiha', 'Agouéto', 'Abobo Sans Fil', 'Abobo Mairie', 'Abobo Dépôt 9' => ['depot 9'],
+        ]],
+        'Adjamé' => [['adjame'], [
+            'Liberté', '220 Logements', 'Williamsville', 'Bracodi', 'Paillet', 'Dallas',
+            'Adjamé Village', 'Mirador', 'Saint-Michel', 'Marie-Thérèse', 'Bromakoté', 'Gare Routière d\'Adjamé' => ['gare routiere'],
+            'Adjamé Nord', 'Habitat Extension', 'Fraternité',
+        ]],
+        'Anyama' => [['anyama'], ['Ahoué', 'Attinguié', 'Akoupé-Zeudji', 'Ébimpé', 'Anyama Adjamé', 'Anyama Centre']],
+        'Attécoubé' => [['attecoube'], [
+            'Santé', 'Locodjro', 'Agban', 'Abobo-Doumé', 'Boribana', 'Mossikro', 'Sébroko', 'Cité Fairmont' => ['fairmont'],
+            'Djéné Ecaré', 'Gbebouto', 'Attécoubé Village',
+        ]],
+        'Bingerville' => [['binger'], ['Akandjé', 'Adjin', 'Abatta', 'Éloka', 'Gbagba', 'Akouai-Santai', 'Bingerville Centre']],
         'Cocody' => [['cocody'], [
             'Angré', 'Riviera 2' => ['riviera ii', 'riv 2'], 'Riviera 3' => ['riviera iii', 'riv 3'], 'Riviera Palmeraie' => ['palmeraie'],
             'Riviera Golf' => ['golf'], 'Deux Plateaux' => ['2 plateaux', 'ii plateaux', '2plateaux'], 'Vallon', 'Blockhauss', 'Danga',
             'Saint-Jean', 'Faya', 'Bonoumin', "M'Pouto" => ['mpouto'], 'Akouédo', 'Ambassades', 'Cité des Arts', 'Mermoz', 'Attoban',
+            'Riviera 1' => ['riviera i', 'riv 1'], 'Riviera 4' => ['riviera iv', 'riv 4'], 'Riviera Africaine', 'Riviera Anono' => ['anono'],
+            "M'Badon" => ['mbadon'], 'Cocody Centre', 'Cocody Village', 'Aghien', 'Gobélé', 'Cité Universitaire de Cocody' => ['cite universitaire'],
+            'Lycée Technique', 'Riviera Bonoumin', 'Angré Château', 'Angré Djibi' => ['djibi'], 'Angré Star',
         ]],
-        'Koumassi' => [['koumassi'], ['Remblais', 'Grand Campement', 'Prodomo', 'Zone industrielle de Koumassi']],
-        'Marcory' => [['marcory'], ['Zone 4' => ['zone iv'], 'Biétry', 'Anoumabo', 'Marcory Résidentiel', 'Champroux']],
-        'Plateau' => [['plateau'], ['Cité administrative', 'Indénié']],
-        'Port-Bouët' => [['port bouet', 'portbouet'], ['Vridi', 'Gonzagueville', 'Aéroport', 'Jean Folly', 'Adjouffou', 'Derrière Wharf']],
-        'Songon' => [['songon'], []],
-        'Treichville' => [['treich', 'treichville'], ['Arras', 'Biafra', 'Avenue 16', 'Gare de Bassam']],
+        'Koumassi' => [['koumassi'], [
+            'Remblais', 'Grand Campement', 'Prodomo', 'Zone industrielle de Koumassi', 'Soweto', 'Inch Allah', 'Aklomiabla', 'Sopim',
+            'Koumassi Centre', 'Koumassi Nord-Est',
+        ]],
+        'Marcory' => [['marcory'], [
+            'Zone 4' => ['zone iv'], 'Biétry', 'Anoumabo', 'Marcory Résidentiel', 'Champroux', 'Sans Fil', 'Alliodan', 'Adeimin', 'Gnanzoua',
+            'Marcory Centre',
+        ]],
+        'Plateau' => [['plateau'], ['Cité administrative', 'Indénié', 'Plateau Centre', 'Sorbonne']],
+        'Port-Bouët' => [['port bouet', 'portbouet'], [
+            'Vridi', 'Gonzagueville', 'Aéroport', 'Jean Folly', 'Adjouffou', 'Derrière Wharf', 'Vridi Cité', 'Vridi Canal', 'Anani',
+            'Abouabou', 'Petit Bassam', 'Zimbabwe', 'Port-Bouët Centre', 'Phare de Port-Bouët',
+        ]],
+        'Songon' => [['songon'], ['Songon Agban', 'Songon Kassemblé', "Songon M'Braté" => ['songon mbrate'], 'Songon Té', 'Songon Centre']],
+        'Treichville' => [['treich', 'treichville'], [
+            'Arras', 'Biafra', 'Avenue 16', 'Gare de Bassam', 'France-Amérique' => ['france amerique'], 'Treichville Centre',
+            'Habitat Treichville', 'Palais des Sports',
+        ]],
         'Yopougon' => [['yop', 'yopougon', 'yopou'], [
             'Siporex', 'Niangon', 'Selmer', 'Toits Rouges', 'Maroc', 'Andokoi', 'Sideci', 'Wassakara', 'Gesco', 'Ananeraie',
             'Koweït' => ['koweit'], 'Kouté', 'Banco', 'Port-Bouët 2' => ['port bouet 2', 'pb2'], 'Micao', 'Yao Séhi', 'Mamie Adjoua',
+            'Lokoa', 'Azito', 'Attié', 'Ficgayo', 'Doukouré', 'Zone industrielle de Yopougon', 'Lubafrique', 'Assonvon', 'Camp Militaire',
+            'Niangon Nord', 'Niangon Sud', 'Yopougon Centre', 'Nouveau Quartier de Yopougon',
         ]],
     ];
 
-    /** Villes de l'intérieur : variantes */
+    /** Villes de l'intérieur : [variantes, quartiers (nom ou nom => variantes)] */
     private const CITIES = [
-        'Grand-Bassam' => ['bassam'], 'Bouaké' => ['bouake'], 'Yamoussoukro' => ['yakro'], 'San-Pédro' => ['san pedro'],
-        'Daloa' => [], 'Korhogo' => [], 'Man' => [], 'Gagnoa' => [], 'Abengourou' => [], 'Assinie' => [], 'Jacqueville' => [],
-        'Dabou' => [], 'Divo' => [], 'Soubré' => [], 'Bondoukou' => [],
+        'Grand-Bassam' => [['bassam'], ['Quartier France', 'Impérial', 'Moossou', 'Azuretti', 'Mockeyville', 'Petit Paris de Bassam']],
+        'Bouaké' => [['bouake'], [
+            'Commerce', 'Koko', 'Air France', 'Ahougnansou', 'Dar-es-Salam' => ['dar es salam'], 'Nimbo', 'Sokoura', "N'Gattakro" => ['ngattakro'],
+            'Broukro', 'Zone industrielle de Bouaké', 'Belleville de Bouaké', 'Kennedy de Bouaké', 'Tolla Kouadiokro',
+        ]],
+        'Yamoussoukro' => [['yakro'], ['Dioulakro', 'Morofé', 'Assabou', "N'Zuessy" => ['nzuessy'], 'Millionnaire', 'Kokrénou', 'Habitat de Yamoussoukro']],
+        'San-Pédro' => [['san pedro'], ['Bardot', 'Séwéké', 'Balmer', 'Poro', 'Lac de San-Pédro', 'Cité de San-Pédro']],
+        'Daloa' => [['daloa'], ['Lobia', 'Tazibouo', 'Orly', 'Gbeuliville', 'Commerce de Daloa']],
+        'Korhogo' => [['korhogo'], ['Petit Paris', 'Soba', 'Banaforo', 'Haoussabougou', 'Koko de Korhogo', 'Delafosse']],
+        'Man' => [[], ['Libreville', 'Domoraud', 'Grand Gbapleu', 'Petit Gbapleu', 'Commerce de Man']],
+        'Gagnoa' => [[], ['Dioulabougou', 'Garahio', 'Babré', 'Commerce de Gagnoa']],
+        'Abengourou' => [[], []], 'Assinie' => [['assinie mafia'], []], 'Jacqueville' => [[], []], 'Dabou' => [[], []], 'Divo' => [[], []],
+        'Soubré' => [['soubre'], []], 'Bondoukou' => [[], []], 'Bonoua' => [[], []], 'Aboisso' => [[], []], 'Agboville' => [[], []],
+        'Adzopé' => [['adzope'], []], 'Sassandra' => [[], []], 'Odienné' => [['odienne'], []], 'Séguéla' => [['seguela'], []],
+        'Toumodi' => [[], []], 'Tiassalé' => [['tiassale'], []], 'Issia' => [[], []], 'Duékoué' => [['duekoue'], []], 'Guiglo' => [[], []],
+        'Ferkessédougou' => [['ferke', 'ferkessedougou'], []], 'Katiola' => [[], []], 'Bouaflé' => [['bouafle'], []], 'Sinfra' => [[], []],
+        'Dimbokro' => [[], []], 'Daoukro' => [[], []], 'Agnibilékrou' => [['agnibilekrou'], []], 'Tabou' => [[], []],
+        'Grand-Lahou' => [['grand lahou'], []],
     ];
+
+    /**
+     * Villes livrées directement depuis une ville (pas d'expédition) : depuis Abidjan, Grand-Bassam. Toutes les autres
+     * villes passent par l'expédition (entrée « Expédition », puis choix de la ville). Les communes d'Abidjan
+     * (Bingerville, Songon, Anyama…) sont livrées directement.
+     */
+    private const DIRECT_CITIES = ['abidjan' => ['grand-bassam']];
 
     /** @var array<string, array{code: string, type: string, name: string, parent: ?string, aliases: list<string>}>|null */
     private static ?array $all = null;
@@ -60,6 +113,36 @@ final class Places
     public static function all(): array
     {
         return array_values(self::index());
+    }
+
+    /**
+     * Villes livrées directement depuis cette ville (codes) ; les autres villes sont des expéditions.
+     *
+     * @return list<string>
+     */
+    public static function directCities(string $home = 'abidjan'): array
+    {
+        return self::DIRECT_CITIES[$home] ?? [];
+    }
+
+    /**
+     * Le lieu est-il livré directement depuis cette ville (lui-même, ses communes et quartiers, ou une ville proche) ?
+     * Sinon, c'est une expédition.
+     */
+    public static function isDirect(string $code, string $home = 'abidjan'): bool
+    {
+        $lineage = self::lineage($code);
+        $city = end($lineage);
+
+        return $city !== false && ($city === $home || in_array($city, self::directCities($home), true));
+    }
+
+    /**
+     * Empreinte de la liste : les applications resynchronisent leurs lieux quand elle change (nouveaux quartiers).
+     */
+    public static function checksum(): string
+    {
+        return hash('sha256', json_encode(self::all(), JSON_UNESCAPED_UNICODE));
     }
 
     /**
@@ -192,8 +275,12 @@ final class Places
                 $add($parent, self::NEIGHBORHOOD, $name, $alias);
             }
         }
-        foreach (self::CITIES as $city => $aliases) {
-            $add(null, self::CITY, $city, $aliases);
+        foreach (self::CITIES as $city => [$aliases, $neighborhoods]) {
+            $parent = $add(null, self::CITY, $city, $aliases);
+            foreach ($neighborhoods as $key => $value) {
+                [$name, $alias] = is_string($key) ? [$key, $value] : [$value, []];
+                $add($parent, self::NEIGHBORHOOD, $name, $alias);
+            }
         }
 
         return self::$all = $all;
