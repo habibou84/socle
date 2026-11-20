@@ -95,6 +95,13 @@ final class Places
         'Grand-Lahou' => [['grand lahou'], []],
     ];
 
+    /**
+     * Villes livrées directement depuis une ville (pas d'expédition) : depuis Abidjan, Grand-Bassam. Toutes les autres
+     * villes passent par l'expédition (entrée « Expédition », puis choix de la ville). Les communes d'Abidjan
+     * (Bingerville, Songon, Anyama…) sont livrées directement.
+     */
+    private const DIRECT_CITIES = ['abidjan' => ['grand-bassam']];
+
     /** @var array<string, array{code: string, type: string, name: string, parent: ?string, aliases: list<string>}>|null */
     private static ?array $all = null;
 
@@ -106,6 +113,28 @@ final class Places
     public static function all(): array
     {
         return array_values(self::index());
+    }
+
+    /**
+     * Villes livrées directement depuis cette ville (codes) ; les autres villes sont des expéditions.
+     *
+     * @return list<string>
+     */
+    public static function directCities(string $home = 'abidjan'): array
+    {
+        return self::DIRECT_CITIES[$home] ?? [];
+    }
+
+    /**
+     * Le lieu est-il livré directement depuis cette ville (lui-même, ses communes et quartiers, ou une ville proche) ?
+     * Sinon, c'est une expédition.
+     */
+    public static function isDirect(string $code, string $home = 'abidjan'): bool
+    {
+        $lineage = self::lineage($code);
+        $city = end($lineage);
+
+        return $city !== false && ($city === $home || in_array($city, self::directCities($home), true));
     }
 
     /**

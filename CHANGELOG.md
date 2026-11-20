@@ -4,7 +4,9 @@
 - Référentiel des lieux complété, tenu par la plateforme : quartiers des 13 communes d'Abidjan (228 quartiers en
   tout), principaux quartiers des grandes villes (Bouaké, Yamoussoukro, San-Pédro, Daloa, Korhogo, Man, Gagnoa,
   Grand-Bassam), 37 villes. Les codes existants ne changent pas. `Places::checksum()` : empreinte de la liste, pour
-  resynchroniser les applications quand elle change. Le contrat de l'API ne change pas (toujours 1.12).
+  resynchroniser les applications quand elle change. `Places::directCities()` et `Places::isDirect()` : depuis Abidjan,
+  seul Grand-Bassam est livré directement ; toutes les autres villes passent par l'expédition. Le contrat de l'API ne
+  change pas (toujours 1.12).
 
 ## 1.12.0
 - Connexion directe de Jibiat Marchand à une entreprise, de serveur à serveur, sans redirection ni mot de passe :
