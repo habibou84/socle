@@ -45,4 +45,23 @@ class PlacesTest extends TestCase
         $this->assertNull(Places::named('Yop Siporex'));
         $this->assertNull(Places::named(''));
     }
+
+    public function test_the_list_covers_every_commune_and_the_main_cities(): void
+    {
+        $all = Places::all();
+        $communes = array_filter($all, fn ($p) => $p['type'] === Places::COMMUNE);
+        $this->assertCount(13, $communes);
+        foreach ($communes as $commune) {
+            $this->assertNotEmpty(array_filter($all, fn ($p) => $p['parent'] === $commune['code']), "Commune sans quartier : {$commune['code']}");
+        }
+        $this->assertSame('Commerce, Bouaké', Places::label('bouake-commerce'));
+        $this->assertSame(['bouake-commerce', 'bouake'], Places::lineage('bouake-commerce'));
+        $this->assertGreaterThan(200, count(array_filter($all, fn ($p) => $p['type'] === Places::NEIGHBORHOOD)));
+    }
+
+    public function test_the_checksum_changes_only_with_the_list(): void
+    {
+        $this->assertSame(Places::checksum(), Places::checksum());
+        $this->assertSame(64, strlen(Places::checksum()));
+    }
 }

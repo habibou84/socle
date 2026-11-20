@@ -76,7 +76,10 @@ Places::inText('yop siporex');      // le quartier Siporex de Yopougon (le plus 
 Places::named('riv 3');             // Riviera 3, par son nom ou une variante exacte
 ```
 
-Un code ne change jamais. Chez Jibiat, chaque zone d'une entreprise porte le code de son lieu (`place` dans
+Un code ne change jamais. Depuis la 1.13, la liste est le référentiel unique des deux applications : quartiers des
+13 communes d'Abidjan et des grandes villes. Ni les e-commerçants ni les entreprises n'ajoutent de lieux : un quartier
+manquant est signalé, puis ajouté ici pour tout le monde. `Places::checksum()` change quand la liste change ; chaque
+application resynchronise alors ses lieux au déploiement. Chez Jibiat, chaque zone d'une entreprise porte le code de son lieu (`place` dans
 `GET /zones`, `null` pour une zone propre à l'entreprise). Pour créer une course (`POST /orders`) ou demander un
 devis (`POST /quotes`), Jibiat Marchand peut envoyer `delivery_place` et `pickup_place` (codes) à la place de
 `delivery_zone_id` et `pickup_zone_id` : Jibiat prend la zone de ce lieu, sinon celle du lieu qui le contient
