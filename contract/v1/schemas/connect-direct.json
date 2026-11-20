@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "connect-direct.json",
+  "title": "État d'une connexion directe (POST, GET et DELETE {url}/api/public/connect/direct)",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "request_id",
+        "status",
+        "company",
+        "connection"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "connected",
+            "pending",
+            "confirmation",
+            "declined",
+            "cancelled",
+            "expired"
+          ]
+        },
+        "company": {
+          "type": "object",
+          "required": [
+            "name",
+            "slug",
+            "url"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "slug": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "connection": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "api_key",
+            "scopes",
+            "merchant"
+          ],
+          "properties": {
+            "api_key": {
+              "type": "string"
+            },
+            "scopes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "merchant": {
+              "type": "object",
+              "required": [
+                "id",
+                "business_name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "business_name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "decide_before": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

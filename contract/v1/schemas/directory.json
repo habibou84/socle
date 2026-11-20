@@ -104,6 +104,10 @@
                 ]
               }
             }
+          },
+          "direct": {
+            "type": "boolean",
+            "description": "Depuis 1.12 : accepte la connexion directe (POST {url}/api/public/connect/direct) et les devis de l'annuaire"
           }
         }
       }

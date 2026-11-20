@@ -1,0 +1,21 @@
+{
+  "$schema": "directory-quotes",
+  "data": [
+    {
+      "slug": "rapide",
+      "covered": true,
+      "total": 1500,
+      "zone": "Cocody Angré",
+      "earliest_date": "{{today}}",
+      "message": null
+    },
+    {
+      "slug": "awa-coursier",
+      "covered": false,
+      "total": null,
+      "zone": null,
+      "earliest_date": null,
+      "message": "Ne livre pas ce lieu."
+    }
+  ]
+}

@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.11';
+    public const VERSION = '1.12';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -104,6 +104,22 @@ final class Contract
     public const PARTNER_SIGNATURE_HEADER = 'X-Jibiat-Signature';
 
     public const PARTNER_TIMESTAMP_HEADER = 'X-Jibiat-Timestamp';
+
+    /**
+     * États d'une connexion directe (champ « status » de connect-direct, depuis 1.12) : compte ouvert et clé donnée,
+     * demande à valider par l'entreprise, compte existant à confirmer par le marchand (WhatsApp), refusée, annulée
+     * par Jibiat Marchand, expirée (pas de décision avant « decide_before »).
+     */
+    public const CONNECT_DIRECT_STATUSES = ['connected', 'pending', 'confirmation', 'declined', 'cancelled', 'expired'];
+
+    /** Décisions envoyées par Jibiat à Jibiat Marchand (champ « status » de connect-decision, depuis 1.12) */
+    public const CONNECT_DECISION_STATUSES = ['connected', 'declined', 'expired'];
+
+    /**
+     * Délai de décision de l'entreprise quand un colis attend l'ouverture du compte (« decide_before », depuis 1.12) :
+     * passé ce délai, la demande expire et la commande revient « à assigner » chez Jibiat Marchand.
+     */
+    public const CONNECT_DIRECT_WAIT_HOURS = 24;
 
     public static function path(string $relative = ''): string
     {

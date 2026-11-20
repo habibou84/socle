@@ -1,5 +1,14 @@
 # Journal des versions
 
+## 1.12.0
+- Connexion directe de Jibiat Marchand à une entreprise, de serveur à serveur, sans redirection ni mot de passe :
+  schémas `connect-direct-request`, `connect-direct` (`POST`, `GET`, `DELETE {url}/api/public/connect/direct`) et
+  `connect-decision` (`POST {Jibiat Marchand}/api/partners/v1/connections`), requêtes signées comme en 1.6,
+  `Contract::CONNECT_DIRECT_STATUSES`, `Contract::CONNECT_DECISION_STATUSES`, `Contract::CONNECT_DIRECT_WAIT_HOURS`
+  (24 h quand un colis attend). Un compte existant n'est jamais rattaché sans l'accord du marchand.
+- Devis de l'annuaire pour un lieu, sans clé : schéma `directory-quotes` (`POST https://jibiat.com/api/public/directory/quotes`) ;
+  champ facultatif `direct` dans l'annuaire. Ajouts seulement : rien ne change pour la version 1.11.
+
 ## 1.11.0
 - Raison du retour : champ facultatif `return_cause` sur la course (`refused`, `max_attempts`, `company`, `merchant`
   ou `null`), `Contract::RETURN_CAUSES` (phrase à montrer à l'e-commerçant), exemple `order-refused`. Ajouts

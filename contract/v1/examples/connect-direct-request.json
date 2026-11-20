@@ -1,0 +1,29 @@
+{
+  "$schema": "connect-direct-request",
+  "client_id": "jibiat-marchand",
+  "request_id": "9b2f6c1e-4d7a-4f0e-a1c3-5e8d2b7f9a10",
+  "store": {
+    "reference": "345",
+    "name": "Awa Mode",
+    "url": "https://awa-mode.jibiat-marchand.com",
+    "city": "Abidjan"
+  },
+  "owner": {
+    "name": "Awa Koné",
+    "phone": "+2250708091011",
+    "phone_verified_at": "{{now}}",
+    "email": null
+  },
+  "pickup": {
+    "place": "abidjan-cocody-angre",
+    "address": "Angré 8e tranche, près de la pharmacie"
+  },
+  "consent_at": "{{now}}",
+  "waiting_orders": 1,
+  "decide_before": "{{today+1}}T10:00:00Z",
+  "activity": {
+    "orders_30d": 120,
+    "since": "{{today-200}}"
+  },
+  "message": null
+}
