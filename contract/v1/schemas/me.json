@@ -80,7 +80,8 @@
               "order.incident",
               "order.updated",
               "payout.paid",
-              "stock.low"
+              "stock.low",
+              "return_handover.updated"
             ]
           }
         }

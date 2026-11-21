@@ -183,6 +183,7 @@ class ContractTest extends TestCase
         $this->assertSame(Contract::RETURN_HANDOVER_STATUSES, Contract::schema('return-handover')['properties']['status']['enum']);
         $this->assertSame([], array_diff(Contract::RETURN_HANDOVER_OPEN_STATUSES, Contract::RETURN_HANDOVER_STATUSES));
         $this->assertContains('return_handover.updated', Contract::WEBHOOK_EVENTS);
+        $this->assertSame(Contract::WEBHOOK_EVENTS, Contract::schema('me')['properties']['data']['properties']['webhook_events']['items']['enum']);
         $this->assertNotContains('return_handover.updated', Contract::ORDER_EVENTS);
 
         $handover = Contract::example('webhook-return-handover')['data']['return_handover'];
