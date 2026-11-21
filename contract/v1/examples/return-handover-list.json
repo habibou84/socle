@@ -1,0 +1,30 @@
+{
+  "$schema": "return-handover-list",
+  "data": [
+    {
+      "reference": "R-4821",
+      "status": "pending",
+      "expires_at": "{{now}}",
+      "handed_at": null,
+      "confirmed_at": null,
+      "confirmed_via": null,
+      "disputed_at": null,
+      "received_by_name": null,
+      "courier": {
+        "name": "Moussa Koné"
+      },
+      "orders": [
+        {
+          "tracking_code": "LV-7K2M-QX9P",
+          "recipient_name": "Awa Traoré",
+          "status": "returning"
+        },
+        {
+          "tracking_code": "LV-3XH8-PL2D",
+          "recipient_name": "Yao Kouassi",
+          "status": "returning"
+        }
+      ]
+    }
+  ]
+}

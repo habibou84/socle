@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "return-handover-list.json",
+  "title": "Remises que le marchand peut confirmer (GET /return-handovers)",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "return-handover.json"
+      }
+    }
+  }
+}

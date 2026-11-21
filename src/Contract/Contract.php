@@ -14,7 +14,7 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.12';
+    public const VERSION = '1.14';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
@@ -24,7 +24,7 @@ final class Contract
     ];
 
     /** Événements envoyés par webhook (en-tête X-Webhook-Event, champ « event ») */
-    public const WEBHOOK_EVENTS = ['order.created', 'order.status_changed', 'order.incident', 'order.updated', 'payout.paid', 'stock.low'];
+    public const WEBHOOK_EVENTS = ['order.created', 'order.status_changed', 'order.incident', 'order.updated', 'payout.paid', 'stock.low', 'return_handover.updated'];
 
     /** Événements qui portent une course dans data.order */
     public const ORDER_EVENTS = ['order.created', 'order.status_changed', 'order.incident', 'order.updated'];
@@ -120,6 +120,16 @@ final class Contract
      * passé ce délai, la demande expire et la commande revient « à assigner » chez Jibiat Marchand.
      */
     public const CONNECT_DIRECT_WAIT_HOURS = 24;
+
+    /**
+     * États d'une remise de retour (1.14) : pending (livreur chez le marchand, à confirmer), expired (QR code
+     * périmé, le livreur peut le renouveler), confirmed (le marchand a tout reçu), unconfirmed (remise de secours
+     * sans confirmation, l'agence vérifie), disputed (« Il en manque », l'agence tranche), resolved, cancelled.
+     */
+    public const RETURN_HANDOVER_STATUSES = ['pending', 'expired', 'confirmed', 'unconfirmed', 'disputed', 'resolved', 'cancelled'];
+
+    /** Remises que le marchand peut encore confirmer ou contester */
+    public const RETURN_HANDOVER_OPEN_STATUSES = ['pending', 'unconfirmed'];
 
     public static function path(string $relative = ''): string
     {
