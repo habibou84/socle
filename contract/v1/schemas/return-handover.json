@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "return-handover.json",
+  "title": "Remise au marchand des colis retournés, à confirmer par le marchand (QR code WhatsApp, Jibiat Marchand…)",
+  "type": "object",
+  "required": [
+    "reference",
+    "status",
+    "orders"
+  ],
+  "properties": {
+    "reference": {
+      "type": "string",
+      "description": "Code de la remise (« R-4821 »), unique parmi les remises encore confirmables du marchand"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "expired",
+        "confirmed",
+        "unconfirmed",
+        "disputed",
+        "resolved",
+        "cancelled"
+      ]
+    },
+    "expires_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "handed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "confirmed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "confirmed_via": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "disputed_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "received_by_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "courier": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "orders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "tracking_code",
+          "status"
+        ],
+        "properties": {
+          "tracking_code": {
+            "type": "string"
+          },
+          "recipient_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

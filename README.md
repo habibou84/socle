@@ -42,7 +42,8 @@ Configuration (`config/services.php` de l'application) :
 - `schemas/` : un schéma JSON par réponse ou webhook (`order`, `order-response`, `order-list`, `webhook`,
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
   `webhook-created`, `error`, `directory`, `directory-quotes`, `connect-token`, `connect-direct-request`, `connect-direct`,
-  `connect-decision`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9, `reschedule` depuis la 1.10, `return_cause` depuis la 1.11. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `connect-decision`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`, `return-handover`,
+  `return-handover-list`, `return-handover-response`, `return-handover-webhook`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9, `reschedule` depuis la 1.10, `return_cause` depuis la 1.11. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -261,3 +262,21 @@ Exemples : `directory-quotes`, `connect-direct-request`, `connect-direct-connect
   (`contract/v2`), annoncée et déployée des deux côtés ; Jibiat garde `v1` tant que Jibiat Marchand l'utilise.
 - Après chaque changement : `composer update habibou84/socle` dans les deux applications, leurs tests du contrat
   doivent passer avant la mise en production.
+
+### Remise des retours confirmée par le marchand (1.14)
+
+Quand l'entreprise fait confirmer les retours (réglage de Jibiat), le livreur qui rapporte des colis crée une
+remise : code `R-4821`, colis concernés (`orders` : `tracking_code`, `recipient_name`, `status`), livreur. Le
+marchand la confirme en scannant le QR code du livreur (WhatsApp) ou dans Jibiat Marchand :
+
+- `GET /api/public/v1/return-handovers` (portée `orders:read`) : remises encore confirmables (`return-handover-list`) ;
+- `POST /api/public/v1/return-handovers/{reference}/confirm` (portée `orders:write`) : tout reçu, les colis passent
+  `returned` (`return-handover-response`) ;
+- `POST /api/public/v1/return-handovers/{reference}/dispute` : il en manque, les colis restent chez le livreur et
+  l'agence tranche.
+
+Chaque changement de la remise part en webhook `return_handover.updated` (`data.return_handover`). Les courses
+changent aussi de statut par leurs propres webhooks : la remise en stock suit `returned` comme avant. États :
+`Contract::RETURN_HANDOVER_STATUSES` (`expired` : QR code périmé, le livreur le renouvelle). Exemples :
+`return-handover-list`, `return-handover-confirmed`, `webhook-return-handover`.
+

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "return-handover-webhook.json",
+  "title": "Webhook return_handover.updated : remise créée (livreur chez le marchand), confirmée, contestée, tranchée…",
+  "type": "object",
+  "required": [
+    "id",
+    "event",
+    "created_at",
+    "data"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "event": {
+      "type": "string",
+      "enum": [
+        "return_handover.updated"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "return_handover"
+      ],
+      "properties": {
+        "return_handover": {
+          "$ref": "return-handover.json"
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,16 @@
 # Journal des versions
 
+## 1.14.0
+- Remise des retours confirmée par le marchand : quand le livreur rapporte des colis, Jibiat crée une remise
+  (« R-4821 ») que le marchand confirme (QR code WhatsApp, ou Jibiat Marchand). Schémas `return-handover`,
+  `return-handover-list` (`GET /api/public/v1/return-handovers` : remises encore confirmables),
+  `return-handover-response` (`POST /api/public/v1/return-handovers/{reference}/confirm` : tout reçu ;
+  `…/dispute` : il en manque), `return-handover-webhook` ; événement `return_handover.updated` ;
+  `Contract::RETURN_HANDOVER_STATUSES`, `Contract::RETURN_HANDOVER_OPEN_STATUSES`. Les colis ne passent « returned »
+  qu'une fois la remise confirmée (ou tranchée par l'agence) : la remise en stock suit le statut de la course comme
+  avant. Ajouts seulement : rien ne change pour la version 1.12 (`Contract::VERSION` passe de 1.12 à 1.14, la 1.13
+  ne touchant que les lieux).
+
 ## 1.13.0
 - Référentiel des lieux complété, tenu par la plateforme : quartiers des 13 communes d'Abidjan (228 quartiers en
   tout), principaux quartiers des grandes villes (Bouaké, Yamoussoukro, San-Pédro, Daloa, Korhogo, Man, Gagnoa,

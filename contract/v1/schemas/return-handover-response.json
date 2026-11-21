@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "return-handover-response.json",
+  "title": "Réponse avec une remise de retour (POST /return-handovers/{reference}/confirm, …/dispute)",
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "properties": {
+    "data": {
+      "$ref": "return-handover.json"
+    }
+  }
+}

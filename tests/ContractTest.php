@@ -25,7 +25,7 @@ class ContractTest extends TestCase
 
     public function test_every_schema_is_valid_json(): void
     {
-        $this->assertCount(24, Contract::schemas());
+        $this->assertCount(28, Contract::schemas());
         foreach (Contract::schemas() as $name) {
             $this->assertIsArray(Contract::schema($name), $name);
         }
@@ -176,5 +176,23 @@ class ContractTest extends TestCase
         $this->assertTrue($quotes[0]['covered']);
         $this->assertIsInt($quotes[0]['total']);
         $this->assertNull($quotes[1]['total']);
+    }
+
+    public function test_a_return_handover_lists_its_parcels_and_a_known_status(): void
+    {
+        $this->assertSame(Contract::RETURN_HANDOVER_STATUSES, Contract::schema('return-handover')['properties']['status']['enum']);
+        $this->assertSame([], array_diff(Contract::RETURN_HANDOVER_OPEN_STATUSES, Contract::RETURN_HANDOVER_STATUSES));
+        $this->assertContains('return_handover.updated', Contract::WEBHOOK_EVENTS);
+        $this->assertSame(Contract::WEBHOOK_EVENTS, Contract::schema('me')['properties']['data']['properties']['webhook_events']['items']['enum']);
+        $this->assertNotContains('return_handover.updated', Contract::ORDER_EVENTS);
+
+        $handover = Contract::example('webhook-return-handover')['data']['return_handover'];
+        $this->assertSame('pending', $handover['status']);
+        $this->assertCount(2, $handover['orders']);
+        $this->assertSame('confirmed', Contract::example('return-handover-confirmed')['data']['status']);
+
+        $unknown = Contract::example('return-handover-confirmed');
+        $unknown['data']['status'] = 'lost';
+        $this->assertNotSame([], Contract::validate('return-handover-response', $unknown));
     }
 }
