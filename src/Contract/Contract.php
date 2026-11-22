@@ -14,13 +14,13 @@ use InvalidArgumentException;
  */
 final class Contract
 {
-    public const VERSION = '1.14';
+    public const VERSION = '1.15';
 
     /** Statuts d'une course (champ « status ») */
     public const ORDER_STATUSES = [
         'pending', 'confirmed', 'rejected', 'pickup_assigned', 'pickup_in_progress', 'picked_up', 'at_hub',
         'delivery_assigned', 'out_for_delivery', 'delivered', 'delivery_failed', 'rescheduled',
-        'return_assigned', 'returning', 'returned', 'cancelled', 'lost',
+        'return_assigned', 'returning', 'returned', 'cancelled', 'lost', 'reassigned',
     ];
 
     /** Événements envoyés par webhook (en-tête X-Webhook-Event, champ « event ») */

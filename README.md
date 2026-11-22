@@ -43,7 +43,7 @@ Configuration (`config/services.php` de l'application) :
   `order-webhook`, `payout-webhook`, `payout`, `payout-list`, `me`, `zones`, `delivery-day`, `quote`,
   `webhook-created`, `error`, `directory`, `directory-quotes`, `connect-token`, `connect-direct-request`, `connect-direct`,
   `connect-decision`, `merchant-app`, `premium-card-request`, `premium-card`, `premium-card-list`, `return-handover`,
-  `return-handover-list`, `return-handover-response`, `return-handover-webhook`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9, `reschedule` depuis la 1.10, `return_cause` depuis la 1.11. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
+  `return-handover-list`, `return-handover-response`, `return-handover-webhook`). La course porte `ratings` depuis la 1.3, `label_url` depuis la 1.5, `cancellation` depuis la 1.9, `reschedule` depuis la 1.10, `return_cause` depuis la 1.11, `reassigned_to` et `reassigned_from` depuis la 1.15. Seuls les champs réellement lus sont obligatoires ; les champs en plus sont permis.
 - `examples/` : des réponses et webhooks réels, chacun avec son schéma (`"$schema": "order-response"`). Les dates
   relatives s'écrivent `{{today}}`, `{{today+1}}`, `{{now}}`.
 
@@ -156,6 +156,14 @@ plus ancienne de Jibiat) : `refused` (le client a refusé le colis), `max_attemp
 l'e-commerçant que pour `merchant` : afficher la phrase de `Contract::RETURN_CAUSES`, pas « Retour demandé ».
 Une valeur inconnue doit s'afficher comme un retour sans raison précise. Exemples : `order-refused`,
 `order-return-requested`.
+
+### Colis en retour réaffecté : `reassigned` (1.15)
+
+Un colis en retour (refusé, tentatives épuisées…) peut partir directement chez un autre client du même e-commerçant
+qui a commandé le même article, au lieu de revenir à la boutique. La course d'origine se termine avec le statut
+`reassigned` et porte `reassigned_to` (code de suivi de la nouvelle course) ; pas de frais de retour. La nouvelle
+course porte `reassigned_from` et commence à `picked_up` (ou `at_hub`), sans ramassage. Afficher « Réaffecté à
+LV-… » ; un statut inconnu doit s'afficher sans rien casser. Exemple : `order-reassigned`.
 
 ### Parrainage des marchands par les entreprises (1.4)
 
