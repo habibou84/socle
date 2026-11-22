@@ -263,6 +263,7 @@
               "returned",
               "cancelled",
               "lost",
+              "reassigned",
               null
             ]
           },
