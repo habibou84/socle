@@ -114,11 +114,23 @@ class ContractTest extends TestCase
         $this->assertSame([], Contract::validate('order-response', $order));
     }
 
+    public function test_a_returned_parcel_can_leave_with_another_order(): void
+    {
+        $order = Contract::example('order-reassigned')['data'];
+        $this->assertSame(['reassigned', 'LV-4HRW-91KD', null], [$order['status'], $order['reassigned_to'], $order['reassigned_from']]);
+        $this->assertContains('reassigned', Contract::ORDER_STATUSES);
+
+        // Champs facultatifs : une course d'une version plus ancienne de Jibiat reste valable
+        $old = Contract::example('order-refused');
+        $this->assertArrayNotHasKey('reassigned_to', $old['data']);
+        $this->assertSame([], Contract::validate('order-response', $old));
+    }
+
     public function test_statuses_and_events_match_the_schemas(): void
     {
         $order = Contract::schema('order');
         $this->assertSame(Contract::ORDER_STATUSES, $order['properties']['status']['enum']);
-        $this->assertCount(17, Contract::ORDER_STATUSES);
+        $this->assertCount(18, Contract::ORDER_STATUSES);
 
         $webhook = Contract::schema('webhook');
         $this->assertSame(Contract::WEBHOOK_EVENTS, $webhook['properties']['event']['enum']);

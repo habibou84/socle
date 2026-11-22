@@ -1,5 +1,12 @@
 # Journal des versions
 
+## 1.15.0
+- Colis en retour réaffecté à une autre course du même e-commerçant (même article) : nouveau statut final
+  `reassigned` pour la course d'origine, champs facultatifs `reassigned_to` (code de la nouvelle course) et
+  `reassigned_from` (sur la nouvelle course, qui commence à `picked_up` ou `at_hub`, sans ramassage). Exemple
+  `order-reassigned`. Un statut inconnu ne doit rien casser chez l'e-commerçant. Ajouts seulement : rien ne change
+  pour la version 1.14.
+
 ## 1.14.0
 - Remise des retours confirmée par le marchand : quand le livreur rapporte des colis, Jibiat crée une remise
   (« R-4821 ») que le marchand confirme (QR code WhatsApp, ou Jibiat Marchand). Schémas `return-handover`,
